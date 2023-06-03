@@ -39,7 +39,7 @@ CREATE TABLE personas
 	apellidos 		VARCHAR(30)	NOT NULL,
 	dni			CHAR(8)		NOT NULL,
 	telefono		CHAR(9)		NULL,
-	fechanacimiento		DATETIME	NOT NULL,
+	fechanacimiento		DATE	NOT NULL,
 	CONSTRAINT uk_persona_dni UNIQUE(dni)
 ) ENGINE = INNODB;
 
@@ -67,14 +67,14 @@ CREATE TABLE empleados
 (
 	idempleado INT AUTO_INCREMENT PRIMARY KEY,
 	idpersona INT NOT NULL, -- fk
-	turno CHAR(1) NOT NULL, -- turno (m)añana o (t)arde o (a)manecida
-	CONSTRAINT ck_turno_empleado CHECK (turno IN ('m', 't', 'a')),
+	turno CHAR(9) NOT NULL, -- turno (m)añana o (t)arde o (a)manecida
+	CONSTRAINT ck_turno_empleado CHECK (turno IN ('mañana', 'tarde', 'amanecida')),
 	CONSTRAINT fk_idpersona_empleado FOREIGN KEY (idpersona) REFERENCES personas (idpersona)
 )ENGINE = INNODB;
 INSERT INTO empleados (idpersona, turno) VALUES
-	(1, 'm'),
-	(2, 't'),
-	(3, 'a');
+	(1, 'mañana'),
+	(2, 'tarde'),
+	(3, 'amanecida');
 SELECT * FROM empleados;
 
 -- tabla categoria
@@ -88,7 +88,8 @@ CREATE TABLE categoria(
 INSERT INTO categoria(descripcion) VALUES
 	('Matrimonial'),
 	('Doble'),
-	('Individual')
+	('Individual'),
+	('Suite')
 SELECT * FROM categoria;
 
 -- tipo de habitaciones
@@ -107,6 +108,7 @@ INSERT INTO tipohabitaciones (idcategoria, descripcion) VALUES
 	(2, 'habitacion para dos'),
 	(1, 'habitacion para uno'),
 	(2, 'habitacion para dos'),
+	(4, 'habitacion completa'),
 	(3, 'habitacion para tres');
 SELECT * FROM tipohabitaciones;
 
@@ -131,7 +133,8 @@ CREATE TABLE habitaciones
 INSERT INTO habitaciones (idtipohabitacion, idcategoria, numcuarto, numhabitacion, piso, capacidad, precio) VALUES
 	(1, 1, 1, 1, 1, 2, 30),
 	(2, 2, 2, 2, 1, 6, 50),
-	(3, 3, 3, 3, 1, 7, 100);
+	(3, 3, 3, 3, 1, 7, 100),
+	(4, 4, 4, 4, 3, 2, 30);
 SELECT * FROM habitaciones;
 
 -- tabla reservaciones
@@ -144,8 +147,8 @@ CREATE TABLE reservaciones
 	idempleado INT NOT NULL,
 	fecharegistro DATETIME NOT NULL DEFAULT NOW(),
 	fechaentrada DATETIME NOT NULL,
-	fechasalida DATETIME NOT NULL,
-	tipocomprobante VARCHAR(8) NOT NULL,  -- factura , boleta  
+	fechasalida DATE NOT NULL,
+	tipocomprobante CHAR(8) NOT NULL,  -- factura , boleta  
 	fechacomprobante DATETIME NOT NULL DEFAULT NOW(),
 	CONSTRAINT ck_tipocomprobante_reservaciones CHECK (tipocomprobante IN ('Factura', 'Boleta')),
 	CONSTRAINT fk_idusuario_reservaciones FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario),
@@ -155,12 +158,13 @@ CREATE TABLE reservaciones
 ) ENGINE = INNODB;
 
 INSERT INTO reservaciones (idusuario, idhabitacion, idcliente, idempleado, fechaentrada, fechasalida, tipocomprobante) VALUES
-	(1, 1, 1, 1, '2023-01-01', '2023-01-04', 'Factura'),
-	(2, 2, 2, 2, '2023-03-20', '2023-04-12', 'Boleta'),
-	(1, 3, 3, 3, '2023-05-15', '2023-05-20', 'Boleta'),
-	(2, 1, 3, 2, '2023-07-14', '2023-09-10', 'Factura');
+	(1, 1, 1, 1, CURRENT_TIMESTAMP(), '2023-01-04', 'Factura'),
+	(2, 2, 2, 2, CURRENT_TIMESTAMP(), '2023-04-12', 'Boleta'),
+	(1, 3, 3, 3, CURRENT_TIMESTAMP(), '2023-05-20', 'Boleta'),
+	(2, 1, 3, 2, CURRENT_TIMESTAMP(), '2023-09-10', 'Factura');
 SELECT * FROM reservaciones;
 
+/*falta hacer y probar*/
 -- tabla detalles de pago
 CREATE TABLE detallespagos
 (
@@ -178,13 +182,12 @@ INSERT INTO detallespagos (idreservacion, formapago) VALUES
 SELECT * FROM detallespagos;
 
 -- pagos
-/*
-create table pagos
+CREATE TABLE pagos
 (
-	idpagos int auto_increment primary key,
-	iddetallepago int not null,
+	idpagos INT AUTO_INCREMENT PRIMARY KEY,
+	iddetallepago INT NOT NULL,
 	-- estado VARCHAR(10),
-	total decimal(10,2) not null,
+	total DECIMAL(10,2) NOT NULL,
 	-- constraint ck_estado_pagos check (estado in ('Pendiente', 'Pagado'))
-)engine = innodb
-*/
+)ENGINE = INNODB
+

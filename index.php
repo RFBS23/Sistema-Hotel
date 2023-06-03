@@ -55,13 +55,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script>
     $(document).ready(function (){
+
       let timerInterval
 
       function login(){
         const datos = {
-          "operacion"   : "iniciarSesion",
-          "email"       : $("#email").val(),
-          "password"    : $("#password").val()
+          "operacion": "iniciarSesion",
+          "email"    : $("#email").val(),
+          "password" : $("#password").val()
         };
 
         $.ajax({
@@ -97,12 +98,12 @@
                 timer: 2000,
                 timerProgressBar: true,
               })
-
               //alert(result.mensaje);
             }
           }
         });
       }
+
       $("#iniciar-sesion").click(login);
       
       $("#password").keypress(function (evt) {

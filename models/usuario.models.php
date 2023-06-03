@@ -4,6 +4,7 @@
 
   class Usuario extends Conexion{
     private $acceso;
+
     //constructor
     public function __CONSTRUCT(){
       $this->acceso = parent::getConexion();
@@ -20,6 +21,5 @@
         die($e->getMessage());
       }
     }
-  
   }
 ?>

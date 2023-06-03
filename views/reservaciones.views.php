@@ -6,7 +6,6 @@
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,21 +16,16 @@
   <link rel="shortcut icon" href="../images/icono.png" type="image/x-icon">
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Datatable-->
   <link rel="stylesheet" href="../assets/scss/estilos.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
 </head>
-
 <body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -68,7 +62,7 @@
         require_once './options.php';
       ?>
       <!-- Nav Item - Pages Collapse Menu -->
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -76,7 +70,7 @@
       <div class="sidebar-heading">
         GESTION
       </div>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -129,8 +123,7 @@
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
@@ -265,13 +258,12 @@
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
-            <!-- Nav Item - User Information -->
+            <!-- informacion personal -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                  <b>Bienvenido:
-                    <?= $_SESSION['iniciarSesion']['nombres']?>&nbsp;<?=$_SESSION['iniciarSesion']['apellidos'] ?></b>
+                  <b>Bienvenido: <?= $_SESSION['iniciarSesion']['nombres']?>&nbsp;<?=$_SESSION['iniciarSesion']['apellidos'] ?></b>
                 </span>
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
               </a>
@@ -384,82 +376,174 @@
             </div>
           </div>
 
-          <div class="row" id="graficos">
-            <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-primary">Registro de Reservaciones</strong>
+                  <form class="validaciones" novalidate id="registroReserv">
+                    <div class="col-md-6 mb-3">
+                      <label for="buscarcliente">Buscar Clientes</label>
+                      <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">
+                        Buscar Cliente
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Buscar Clientes</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              ...
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+                              <button type="button" class="btn btn-primary">Seleccionar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Fin Modal -->
                     </div>
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Pie Chart -->
-            <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
-                  </div>
-                  <div class="mt-4 text-center small">
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Direct
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Referral
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- aqui cargamos el contenido dinamico-->
-          <div class="container-fluid" id="content-dinamics">
+                    <div class="form-row">
 
+                      <div class="col-md-6 mb-3">
+                        <label for="cliente">Clientes</label>
+                        <select class="custom-select" id="cliente" required>
+                        </select>
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6 mb-3">
+                        <label for="empleado">Empleado</label>
+                        <select class="custom-select" id="empleado" required>
+                        </select>
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="nombres">Nombre usuario</label>
+                        <select class="custom-select" id="nombres" required>
+                        </select>
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="categoria">Categoria</label>
+                        <select class="custom-select" id="categoria" required>
+                        </select>
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="col-md-6 mb-3">
+                        <label for="fechaentrada">Fecha Entrada</label>
+                        <input type="date" id="fechaentrada" class="form-control">
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="fechasalida">Fecha Salida</label>
+                        <input type="date" id="fechasalida" class="form-control">
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="comprobante">Comprobante de pago</label>
+                        <select class="custom-select" id="comprobante" required>
+                          <option selected disabled value=''>Seleccione ...</option>
+                          <option value='boleta'>Boleta</option>
+                          <option value='factura'>Factura</option>
+                        </select>
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="pago">Forma de pago</label>
+                        <select class="custom-select" id="pago" required>
+                          <option selected disabled value=''>Seleccione ...</option>
+                          <option value='Debito'>Debito</option>
+                          <option value='Efectivo'>Efectivo</option>
+                        </select>
+                        <div class="valid-feedback">
+                          campo completado
+                        </div>
+                        <div class="invalid-feedback">
+                          Por favor completa los campos requeridos
+                        </div>
+                      </div>
+
+                    </div>
+                    <button class="btn btn-outline-primary btn-lg btn-block" type="submit" id="registrar">Registrar Reservaciones</button>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+            <!-- tabla -->
+            <div class="col-md-6">
+              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-4 text-success-emphasis">Tabla de Registro de Reservacion</strong>
+                  <table class="table table-striped table-hover table-bordered" id="mitabla" width="100%">
+                    <thead class="table-primary">
+                      <tr>
+                        <th scope="col">Clientes</th>
+                        <th scope="col">Nombre Usuario</th>
+                        <th scope="col">Tipo de pago</th>
+                        <th scope="col">Comprobante Pago</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- fin tabla -->
           </div>
-          <!-- fin contenido dinamico-->
+
         </div>
 
       </div>
@@ -476,9 +560,10 @@
       <!-- footer -->
 
     </div>
-    <!-- End of Content Wrapper -->
+  <!-- End of Content Wrapper -->
   </div>
   <!-- End of Page Wrapper -->
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -486,51 +571,166 @@
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
-  <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-  <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
 
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <!-- Datatable for BS5 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    //1.- crearemos una funcion que obtenga la url(vista)
-    function getURL() {
-      //1. obtener la URL
-      const url = new URL(window.location.href);
-      //console.log(url);
-      //2.- ibtener el valor enviado por la URL
-      const vista = url.searchParams.get("view");
-      //console.log(vista);
-      //3.- crear un objto de referencia contenedor
-      const contenedor = document.querySelector("#content-dinamics");
-      //cuando el usuario elije una opcion
-      if (vista != null) {
-        fetch(vista)
-          .then(respuesta => respuesta.text())
-          .then(datos => {
-            contenedor.innerHTML = datos;
-            //necesitamos reorrer todas las etiquetas <script> y "reactivarlas"
-            const scriptsTag = contenedor.getElementsByTagName("script");
-            for (i = 0; i < scriptsTag.length; i++) {
-              eval(scriptsTag[i].innerHTML);
+    /*validacion de cajas*/
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('validaciones');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+    /* fin validaciones* */
+
+    //mostramos los empleados
+    document.addEventListener("DOMContentLoaded", () => {
+      //objetos
+      const empleados = document.querySelector("#empleado");
+      const nombres = document.querySelector("#nombres");
+      const cliente = document.querySelector("#cliente");
+      const categoria = document.querySelector("#categoria");
+      const btnregistrar = document.querySelector("#registrar");
+      
+      //metodos
+      function mostrarEmpleado(){
+        const parameters = new URLSearchParams();
+        parameters.append("operacion", "listarEmpleados");
+        fetch("../controllers/reservaciones.controllers.php", {
+          method: 'POST',
+          body: parameters
+        })
+        .then(response => response.json())
+        .then(data => {
+          empleados.innerHTML = "<option selected disabled value=''>Seleccione ...</option>";
+          data.forEach(element => {
+            const optionTag = document.createElement("option");
+            optionTag.value = element.empleados
+            optionTag.text = element.nombres;
+            empleados.appendChild(optionTag);
+          });
+        });
+      }
+
+      //mostramos usuarios
+      function mostrarUsuarios() {
+        const parameters = new URLSearchParams();
+        parameters.append("operacion", "listarUsuarios");
+        fetch("../controllers/reservaciones.controllers.php", {
+          method: 'POST',
+          body: parameters
+        })
+        .then(response => response.json())
+        .then(data => {
+          nombres.innerHTML = "<option selected disabled value=''>Seleccione ...</option>";
+          data.forEach(element => {
+            const optionTag = document.createElement("option");
+            optionTag.value = element.idusuario
+            optionTag.text = element.nombres;
+            nombres.appendChild(optionTag);
+          });
+        });
+      }
+
+      //mostrar habitaciones
+      function mostrarHabitaciones() {
+        const parameters = new URLSearchParams();
+        parameters.append("operacion", "mostrarHabitacion");
+        fetch("../controllers/habitaciones.controllers.php", {
+          method: 'POST',
+          body: parameters
+        })
+        .then(response => response.json())
+        .then(data => {
+          categoria.innerHTML = "<option selected disabled value=''>Seleccione ...</option>";
+          data.forEach(element => {
+            const optionTag = document.createElement("option");
+            optionTag.value = element.idhabitacion
+            optionTag.text = element.descripcion;
+            categoria.appendChild(optionTag);
+          });
+        });
+      }
+
+      //mostrar clientes
+      function mostrarpersonas(){
+        const parameters = new URLSearchParams();
+        parameters.append("operacion", "listarClientes");
+        fetch("../controllers/reservaciones.controllers.php", {
+          method: 'POST',
+          body: parameters
+        })
+        .then(response => response.json())
+        .then(data => {
+          cliente.innerHTML = "<option selected disabled value=''>Seleccione ...</option>";
+          data.forEach(element => {
+            const optionTag = document.createElement("option");
+            optionTag.value = element.idpersona
+            optionTag.text = element.clientes;
+            cliente.appendChild(optionTag);
+          });
+        });
+      }
+
+      function registroReservaciones() {
+        if (confirm("¿SEguro de rgistrar?")) {
+          const parameters = new URLSearchParams();
+          parameters.append("operacion", "reservacionRegistrar");
+          parameters.append("idempleado", document.querySelector("#empleado").value);
+          parameters.append("idusuario", document.querySelector("#nombres").value);
+          parameters.append("idhabitacion", document.querySelector("#categoria").value);
+          parameters.append("idcliente", document.querySelector("#cliente").value);
+          parameters.append("fechaentrada", document.querySelector("#fechaentrada").value);
+          parameters.append("fechasalida", document.querySelector("#fechasalida").value);
+          parameters.append("tipocomprobante", document.querySelector("#comprobante").value);
+          parameters.append("formapago", document.querySelector("#pago").value);
+
+          fetch("../controllers/reservaciones.controllers.php", {
+            method: 'POST',
+            body: parameters
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            if(data.status){
+              document.querySelector("#registroReserv").reset();                            
+            }else{
+              alert(data.message);
             }
           });
+        }
       }
-    }
-    getURL();
-  });
-  </script>
-</body>
+      //registroReservaciones();
 
+      mostrarpersonas();
+      mostrarHabitaciones();
+      mostrarEmpleado();
+      mostrarUsuarios();
+      btnregistrar.addEventListener("click", registroReservaciones);
+    });
+
+  </script>
+
+</body>
 </html>
