@@ -8,19 +8,23 @@
 
   //S - A
   switch ($permisos) {
-    case 'A':
+    case 'Administrador':
       $opciones = [
         ["menu" => "<i class='fas fa-fw fa-users'></i> Clientes", "url" => "dashboard.php?view=clientes.views.php"],
         ["menu" => "<i class='fas fa-fw fa-bed'></i> Habitaciones", "url" => "habitaciones.views.php"],
-        ["menu" => "<i class='fas fa-fw fa-clipboard-list'></i> Reservaciones", "url" => "reservaciones.views.php"]
+        ["menu" => "<i class='fas fa-fw fa-clipboard-list'></i> Reservaciones", "url" => "reservaciones.views.php"],
+        ["menu" => "<i class='fa-solid fa-user-plus'></i> registro Usuario", "url" => "dashboard.php?view=registro.views.php"],
+        ["menu" => "<i class='fa-solid fa-chart-simple'></i> Graficos", "url" => "graficos.views.php"]
       ];
     break;
     
-    case 'S':
+    case 'Standar':
       $opciones = [
         ["menu" => "<i class='fas fa-fw fa-users'></i> Clientes", "url" => "dashboard.php?view=clientes.views.php"],
         ["menu" => "<i class='fas fa-fw fa-bed'></i> Habitaciones", "url" => "habitaciones.views.php"],
-        ["menu" => "<i class='fas fa-fw fa-clipboard-list'></i> Reservaciones", "url" => "reservaciones.views.php"]
+        ["menu" => "<i class='fas fa-fw fa-clipboard-list'></i> Reservaciones", "url" => "reservaciones.views.php"],
+        ["menu" => "<i class='fa-solid fa-user-plus'></i> registro Usuario", "url" => "dashboard.php?view=registro.views.php"],
+        ["menu" => "<i class='fa-solid fa-chart-simple'></i> Graficos", "url" => "graficos.views.php"]
       ];
     break;
   }

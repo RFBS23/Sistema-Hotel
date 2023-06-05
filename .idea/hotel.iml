@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/phpmailer/.github" />
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/phpmailer/.phan" />
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/phpmailer/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/phpmailer/examples" />
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/phpmailer/language" />
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/phpmailer/src" />
+      <excludeFolder url="file://$MODULE_DIR$/phpmailer/vendor/phpmailer/test" />
+      <excludeFolder url="file://$MODULE_DIR$/report/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/report/vendor/spipu/html2pdf" />
+      <excludeFolder url="file://$MODULE_DIR$/report/vendor/tecnickcom/tcpdf" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -12,7 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Dashboard</title>
+  <title>Hotel: </title>
+    <title>Tabla de Registro de Reservacion</title>
   <link rel="shortcut icon" href="../images/icono.png" type="image/x-icon">
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,9 +23,14 @@
   <!-- Datatable-->
   <link rel="stylesheet" href="../assets/scss/estilos.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.0/css/bootstrap.min.css">
+
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap4.min.css" rel="stylesheet"/>
+
 </head>
 <body id="page-top">
   <!-- Page Wrapper -->
@@ -120,141 +126,6 @@
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                      aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
-              </a>
-              <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-              </div>
-            </li>
-
-            <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                  Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                      problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how
-                      would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                      the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                      told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
-            </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -382,37 +253,10 @@
                 <div class="col p-4 d-flex flex-column position-static">
                   <strong class="d-inline-block mb-2 text-primary">Registro de Reservaciones</strong>
                   <form class="validaciones" novalidate id="registroReserv">
-                    <div class="col-md-6 mb-3">
-                      <label for="buscarcliente">Buscar Clientes</label>
-                      <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">
-                        Buscar Cliente
-                      </button>
-                      <!-- Modal -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Buscar Clientes</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              ...
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
-                              <button type="button" class="btn btn-primary">Seleccionar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Fin Modal -->
-                    </div>
-                    <div class="form-row">
 
+                    <div class="form-row">
                       <div class="col-md-6 mb-3">
-                        <label for="cliente">Clientes</label>
+                        <label for="cliente">Seleccionar Clientes</label>
                         <select class="custom-select" id="cliente" required>
                         </select>
                         <div class="valid-feedback">
@@ -514,28 +358,37 @@
                       </div>
 
                     </div>
-                    <button class="btn btn-outline-primary btn-lg btn-block" type="submit" id="registrar">Registrar Reservaciones</button>
+                    <button class="btn btn-outline-primary btn-lg btn-block" type="button" id="registrar">Registrar Reservaciones</button>
                   </form>
 
                 </div>
               </div>
             </div>
+
             <!-- tabla -->
             <div class="col-md-6">
               <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-4 text-success-emphasis">Tabla de Registro de Reservacion</strong>
-                  <table class="table table-striped table-hover table-bordered" id="mitabla" width="100%">
+                  <strong class="d-inline-block mb-4 text-success">Tabla de Registro de Reservacion</strong>
+
+                  <table class="table table-striped table-hover table-bordered responsive" id="tablapagos" width="100%">
+                      <colgroup>
+                          <col width="40%">
+                          <col width="20%">
+                          <col width="20%">
+                          <col width="20%"> <!-- Comandos -->
+                      </colgroup>
                     <thead class="table-primary">
                       <tr>
-                        <th scope="col">Clientes</th>
-                        <th scope="col">Nombre Usuario</th>
-                        <th scope="col">Tipo de pago</th>
-                        <th scope="col">Comprobante Pago</th>
+                        <th>Cliente</th>
+                          <th>Fecha pago</th>
+                        <th>Pagos</th>
+                        <th>precio</th>
+                        <th>monto alquiler</th>
                       </tr>
                     </thead>
                     <tbody>
-
+                      
                     </tbody>
                   </table>
                 </div>
@@ -583,6 +436,16 @@
   <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 
+  <!-- botones -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+
   <script>
     /*validacion de cajas*/
     (function() {
@@ -602,17 +465,112 @@
         });
       }, false);
     })();
-    /* fin validaciones* */
+    
+    //para ingresar solo numeros
+    function SoloNumeros(evt){
+      if(window.event){
+        keynum = evt.keyCode;
+      }
+      else{
+        keynum = evt.which;
+      }
+      if((keynum > 47 && keynum < 58) || keynum == 8 || keynum== 13){
+        return true;
+      }
+      else{
+        Swal.fire({
+          title: 'ALERTA',
+          text: 'Ingresar solo numeros',
+          icon: 'error',
+          backdrop: 'true',
+          timer: 2000,
+          timerProgressBar: 'true',
+          toast: true,
+          showCancelButton: false,
+          showConfirmButton: false,
+          position: 'top-end'
+        })
+        //alert("Ingresar solo numeros");
+        return false;
+      }
+    }
+    /*fin validaciones */
+
 
     //mostramos los empleados
     document.addEventListener("DOMContentLoaded", () => {
       //objetos
+      const cliente = document.querySelector("#cliente");
       const empleados = document.querySelector("#empleado");
       const nombres = document.querySelector("#nombres");
-      const cliente = document.querySelector("#cliente");
       const categoria = document.querySelector("#categoria");
       const btnregistrar = document.querySelector("#registrar");
-      
+
+        function registroReservacion() {
+            Swal.fire({
+                title: "¿Está seguro de registrar al Cliente?",
+                showCancelButton: true,
+                confirmButtonText: "Sí, Registrar",
+                cancelButtonText: "No, Cancelar",
+                confirmButtonColor: '#1D59F9',
+                customClass: {
+                    confirmButton: "spacing",
+                    cancelButton: "spacing"
+                }
+            }).then((result)=> {
+                if (result.ifConfirmed){
+                    const parameters = new URLSearchParams();
+                    parameters.append("operacion", "registroReservacion");
+                    parameters.append("idempleado", document.querySelector("#empleado").value);
+                    parameters.append("idusuario", document.querySelector("#nombres").value);
+                    parameters.append("idhabitacion", document.querySelector("#categoria").value);
+                    parameters.append("idcliente", document.querySelector("#cliente").value);
+                    parameters.append("fechaentrada", document.querySelector("#fechaentrada").value);
+                    parameters.append("fechasalida", document.querySelector("#fechasalida").value);
+                    parameters.append("tipocomprobante", document.querySelector("#comprobante").value);
+                    parameters.append("formapago", document.querySelector("#pago").value);
+                    fetch("../controllers/reservaciones.controllers.php", {
+                        method: 'POST',
+                        body: parameters
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            if(data.status){
+                                Swal.fire({
+                                    title: 'Alerta',
+                                    text: 'Registro Exitoso',
+                                    icon: 'success',
+                                    backdrop: 'true',
+                                    timer: 2000,
+                                    timerProgressBar: 'true',
+                                    toast: true,
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    position: 'top-end'
+                                })
+                                document.querySelector("#registroReserv").reset();
+                                $("#cliente").val(null).trigger('change');
+                            }else{
+                                Swal.fire({
+                                    title: 'Alerta',
+                                    text: "(data.message)",
+                                    icon: 'error',
+                                    backdrop: 'true',
+                                    timer: 2000,
+                                    timerProgressBar: 'true',
+                                    toast: true,
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    position: 'top-end'
+                                })
+                                //alert(data.message);
+                            }
+                        });
+                }
+            })
+        }
+
       //metodos
       function mostrarEmpleado(){
         const parameters = new URLSearchParams();
@@ -626,7 +584,7 @@
           empleados.innerHTML = "<option selected disabled value=''>Seleccione ...</option>";
           data.forEach(element => {
             const optionTag = document.createElement("option");
-            optionTag.value = element.empleados
+            optionTag.value = element.idempleado
             optionTag.text = element.nombres;
             empleados.appendChild(optionTag);
           });
@@ -634,7 +592,7 @@
       }
 
       //mostramos usuarios
-      function mostrarUsuarios() {
+      function mostrarUsuario() {
         const parameters = new URLSearchParams();
         parameters.append("operacion", "listarUsuarios");
         fetch("../controllers/reservaciones.controllers.php", {
@@ -656,7 +614,7 @@
       //mostrar habitaciones
       function mostrarHabitaciones() {
         const parameters = new URLSearchParams();
-        parameters.append("operacion", "mostrarHabitacion");
+        parameters.append("operacion", "listarHabitaciones");
         fetch("../controllers/habitaciones.controllers.php", {
           method: 'POST',
           body: parameters
@@ -667,7 +625,7 @@
           data.forEach(element => {
             const optionTag = document.createElement("option");
             optionTag.value = element.idhabitacion
-            optionTag.text = element.descripcion;
+            optionTag.text = element.habitacion;
             categoria.appendChild(optionTag);
           });
         });
@@ -693,44 +651,43 @@
         });
       }
 
-      function registroReservaciones() {
-        if (confirm("¿SEguro de rgistrar?")) {
-          const parameters = new URLSearchParams();
-          parameters.append("operacion", "reservacionRegistrar");
-          parameters.append("idempleado", document.querySelector("#empleado").value);
-          parameters.append("idusuario", document.querySelector("#nombres").value);
-          parameters.append("idhabitacion", document.querySelector("#categoria").value);
-          parameters.append("idcliente", document.querySelector("#cliente").value);
-          parameters.append("fechaentrada", document.querySelector("#fechaentrada").value);
-          parameters.append("fechasalida", document.querySelector("#fechasalida").value);
-          parameters.append("tipocomprobante", document.querySelector("#comprobante").value);
-          parameters.append("formapago", document.querySelector("#pago").value);
+      function listarPago(){
+        $.ajax({
+          url: '../controllers/reservaciones.controllers.php',
+          type: 'POST',
+          data: {'operacion' : 'listarPagos'},
+          success: function (result) {
+            var tabla = $("#tablapagos").DataTable();
+            tabla.destroy();
+            $("#tablapagos tbody").html(result);
 
-          fetch("../controllers/reservaciones.controllers.php", {
-            method: 'POST',
-            body: parameters
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            if(data.status){
-              document.querySelector("#registroReserv").reset();                            
-            }else{
-              alert(data.message);
-            }
-          });
-        }
+            $("#tablapagos").DataTable({
+              dom: 'Bfrtip',
+              responsive: true,
+                buttons: [
+                    {
+                        "extend": "pdf",
+                        "text": "Generar Reporte <i class='fa-solid fa-file-pdf'></i>",
+                        exportOptions: { columns: [0,1,2,3] },
+                        "className": "btn btn-danger"
+                    }
+                ],
+              language: {
+                url: '../assets/js/Spanish.json'
+              }
+            });
+          }
+        });
       }
-      //registroReservaciones();
 
-      mostrarpersonas();
-      mostrarHabitaciones();
-      mostrarEmpleado();
-      mostrarUsuarios();
-      btnregistrar.addEventListener("click", registroReservaciones);
+        mostrarEmpleado();
+        mostrarUsuario();
+        mostrarHabitaciones();
+        mostrarpersonas();
+        listarPago();
+        btnregistrar.addEventListener("click", registroReservacion);
     });
 
   </script>
-
 </body>
 </html>

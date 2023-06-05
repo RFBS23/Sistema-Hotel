@@ -12,8 +12,8 @@
 
   //3.- definir los permisos
   $permisos = [
-    "A" => ["clientes.views.php", "habitaciones.views.php", "reservaciones.views.php"],
-    "S" => ["clientes.views.php", "habitaciones.views.php", "reservaciones.views.php"]
+    "Administrador" => ["clientes.views.php", "habitaciones.views.php", "reservaciones.views.php", "registro.views.php", "graficos.views.php"],
+    "Standar" => ["clientes.views.php", "habitaciones.views.php", "reservaciones.views.php", "graficos.views.php"]
   ];
 
   //4.- validar el acceso 

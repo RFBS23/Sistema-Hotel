@@ -11,27 +11,42 @@
     }
 
     //metodo para mostrar habitaciones
-    public function listarHabitaciones(){
-      try{
-        $consulta = $this->acceso->prepare("CALL spu_habitaciones_listar()");
-        $consulta->execute();
-        $datosObtenidos = $consulta->fetchAll(PDO::FETCH_ASSOC); // arreglo asociativo
-        return $datosObtenidos;
-      } catch(Exception $e){
-        die($e->getMessage());
+      public function getdataHabitaciones(){
+          try {
+              $consulta = $this->acceso->prepare("CALL spu_habitaciones_getdata");
+              $consulta->execute();
+              return $consulta->fetchAll(PDO::FETCH_ASSOC);
+          } catch (Exception $e){
+              die($e->getMessage());
+          }
       }
-    }
-
-    public function mostrarHabitacion(){
-      try{
-        $consulta = $this->acceso->prepare("CALL spu_habitaciones_mostrar()");
-        $consulta->execute();
-        $datosObtenidos = $consulta->fetchAll(PDO::FETCH_ASSOC); // arreglo asociativo
-        return $datosObtenidos;
-      } catch(Exception $e){
-        die($e->getMessage());
+      public function habitacionDisponible(){
+          try {
+              $consulta = $this->acceso->prepare("CALL spu_habitaciones_disponible()");
+              $consulta->execute();
+              return $consulta->fetchAll(PDO::FETCH_ASSOC);
+          } catch (Exception $e){
+              die($e->getMessage());
+          }
       }
-    }
+      public function habitacionOcupada(){
+          try {
+              $consulta = $this->acceso->prepare("CALL spu_habitaciones_ocupadas()");
+              $consulta->execute();
+              return $consulta->fetchAll(PDO::FETCH_ASSOC);
+          } catch (Exception $e){
+              die($e->getMessage());
+          }
+      }
+      public function habitacionLimpieza(){
+          try {
+              $consulta = $this->acceso->prepare("CALL spu_habitaciones_limpieza()");
+              $consulta->execute();
+              return $consulta->fetchAll(PDO::FETCH_ASSOC);
+          } catch (Exception $e){
+              die($e->getMessage());
+          }
+      }
 
   }
 ?>

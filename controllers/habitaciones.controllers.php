@@ -7,18 +7,33 @@
     //instanciamos la clase habitaciones
     $habitaciones = new Habitaciones();
 
-    if($_POST['operacion'] == 'listarHabitaciones') {
-      $data = $habitaciones->listarHabitaciones();
-      if ($data) {
-        echo json_encode($data);
-      }
+    if ($_POST['operacion'] == 'getdataHabitaciones'){
+        $datosObtenidos = $habitaciones->getdataHabitaciones();
+        if ($datosObtenidos){
+            echo json_encode($datosObtenidos);
+        }
     }
 
-    if($_POST['operacion'] == 'mostrarHabitacion') {
-      $data = $habitaciones->mostrarHabitacion();
-      if ($data) {
-        echo json_encode($data);
-      }
+    if ($_POST['operacion'] == 'habitacionDisponible'){
+        $datosObtenidos = $habitaciones->habitacionDisponible();
+        if ($datosObtenidos){
+            echo json_encode($datosObtenidos);
+        }
     }
+
+    if ($_POST['operacion'] == 'habitacionOcupada'){
+        $datosObtenidos = $habitaciones->habitacionOcupada();
+        if ($datosObtenidos){
+            echo json_encode($datosObtenidos);
+        }
+    }
+
+    if ($_POST['operacion'] == 'habitacionLimpieza'){
+        $datosObtenidos = $habitaciones->habitacionLimpieza();
+        if ($datosObtenidos){
+            echo json_encode($datosObtenidos);
+        }
+    }
+
   }
 ?>

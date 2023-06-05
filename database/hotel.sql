@@ -1,25 +1,45 @@
+DROP DATABASE IF EXISTS hotel;
 CREATE DATABASE hotel;
 USE hotel;
+
+-- tabla personas 
+CREATE TABLE personas
+(
+	idpersona		INT AUTO_INCREMENT PRIMARY KEY,
+	nombres 		VARCHAR(30) NOT NULL,
+	apellidos 		VARCHAR(30) NOT NULL,
+	dni			CHAR(8) NOT NULL,
+	telefono		CHAR(9) NULL,
+	fechanacimiento		DATE NOT NULL,
+	CONSTRAINT uk_persona_dni UNIQUE(dni)
+) ENGINE = INNODB;
+
+INSERT INTO personas (nombres, apellidos, dni, telefono, fechanacimiento) VALUES
+	('fabrizio','Barrios Saavedra','89632547','986574123','2004-03-19'),
+	('daniela','Mexzo Chavez','82533246','986574985','2003-07-27'),
+	('cristina','Barreto Rojas','12345678','91225885','2003-02-12');
+SELECT * FROM personas;
 
 -- tabla usuarios
 CREATE TABLE usuarios 
 (
 	idusuario		INT AUTO_INCREMENT PRIMARY KEY,
-	apellidos		VARCHAR(40)	NOT NULL,
-	nombres 		VARCHAR(40)	NOT NULL,
-	telefono		CHAR(9)		NULL,
+	idpersona		INT NOT NULL,
+	nombreusuario 		VARCHAR(30) NOT NULL,
 	email 			VARCHAR(70) 	NOT NULL,
 	claveacceso		VARCHAR(90)	NOT NULL,
-	nivelacceso		CHAR(1)		NOT NULL DEFAULT 'S', -- S standar A administrador
+	nivelacceso		CHAR(14)	NOT NULL DEFAULT 'Standar', -- S standar A administrador
 	fecharegistro		DATETIME	NOT NULL DEFAULT NOW(),
 	fechabaja 		DATETIME 	NULL,
 	estado			CHAR(1)		NOT NULL DEFAULT '1', -- 1 = activo | 0 = inactivo
-	CONSTRAINT uk_email_usu UNIQUE (email)
+	CONSTRAINT uk_email_usuarios UNIQUE (email),
+	CONSTRAINT fk_idpersona_usuarios FOREIGN KEY (idpersona) REFERENCES personas (idpersona)
 ) ENGINE = INNODB;
 
-INSERT INTO usuarios (apellidos, nombres, email, claveacceso, nivelacceso) VALUES
-	('Barrios Saavedra', 'fabrizio', 'fabrizio@hola.pe', '12345', "S"),
-	('Barrios Saavedra', 'rodrigo', 'rodrigo@hotmail.pe', '12345', "A");
+INSERT INTO usuarios (idpersona, nombreusuario, email, claveacceso, nivelacceso) VALUES
+	(1,'fabrizio', 'fabrizio@hola.pe', '12345', "Standar"),
+	(2,'daniela', 'mexzo@gmail.pe', '12345', "Administrador"),
+	(3,'cristina', 'cristina@hotmail.pe', '12345', "Administrador");
 			
 UPDATE usuarios 
 	SET claveacceso = '$2y$10$EohJSIFgIehaCjTte7gR7ejMGA.iYrZ20Tn9h1KLUdydZFY7e8tbK'
@@ -29,25 +49,11 @@ UPDATE usuarios
 	SET claveacceso = '$2y$10$Rl.KQvA3eLF0XSlNrPj8euYJUw8CqSscWIwyVzWYPl6zPpRaW5lxi'
 	WHERE idusuario = 2;
 	
+UPDATE usuarios 
+	SET claveacceso = '$2y$10$doonbpnR46ytzDoz28mD6eiutBTu/bQF2hsn9Ujs5Zhri0XgsXyFW'
+	WHERE idusuario = 3;
+	
 SELECT * FROM usuarios;
-
--- tabla personas 
-CREATE TABLE personas
-(
-	idpersona		INT AUTO_INCREMENT PRIMARY KEY,
-	nombres 		VARCHAR(30)	NOT NULL,
-	apellidos 		VARCHAR(30)	NOT NULL,
-	dni			CHAR(8)		NOT NULL,
-	telefono		CHAR(9)		NULL,
-	fechanacimiento		DATE	NOT NULL,
-	CONSTRAINT uk_persona_dni UNIQUE(dni)
-) ENGINE = INNODB;
-
-INSERT INTO personas (nombres, apellidos, dni, telefono, fechanacimiento) VALUES
-	('fabrizio','Barrios Saavedra','89632547','986574123','2004-03-19'),
-	('daniela','Mexzo Chavez','82533246','986574985','2003-07-27'),
-	('cristina','Barreto Rojas','12345678','91225885','2003-02-12');
-SELECT * FROM personas;
 
 -- tabla areas
 CREATE TABLE areas
@@ -99,7 +105,6 @@ CREATE TABLE tipohabitaciones
 	idcategoria INT NOT NULL,
 	descripcion VARCHAR(50) NOT NULL,
 	estado CHAR(1) NOT NULL DEFAULT '1',
-	fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
 	CONSTRAINT fk_idcategoria_tipohabitaciones FOREIGN KEY (idcategoria) REFERENCES categoria (idcategoria)
 ) ENGINE = INNODB;
 
@@ -117,7 +122,6 @@ CREATE TABLE habitaciones
 (
 	idhabitacion INT AUTO_INCREMENT PRIMARY KEY,
 	idtipohabitacion INT NOT NULL,
-	idcategoria INT NOT NULL,
 	numcuarto TINYINT NOT NULL,
 	numhabitacion SMALLINT NOT NULL,
 	piso TINYINT NOT NULL,
@@ -125,16 +129,15 @@ CREATE TABLE habitaciones
 	precio DECIMAL(5,2) NOT NULL,
 	estado VARCHAR(20) NOT NULL DEFAULT 'Disponible', -- Disponible , Ocupado, Limpieza
 	CONSTRAINT fk_idtipohabitacion_habitaciones FOREIGN KEY (idtipohabitacion) REFERENCES tipohabitaciones (idtipohabitacion),
-	CONSTRAINT fk_idcategoria_habitaciones FOREIGN KEY (idcategoria) REFERENCES categoria (idcategoria),
 	CONSTRAINT ck_precio_habitaciones CHECK (precio > 0),
 	CONSTRAINT ck_estado_habitaciones CHECK (estado IN ('Disponible','Ocupado','Limpieza'))
 ) ENGINE = INNODB;
 
-INSERT INTO habitaciones (idtipohabitacion, idcategoria, numcuarto, numhabitacion, piso, capacidad, precio) VALUES
-	(1, 1, 1, 1, 1, 2, 30),
-	(2, 2, 2, 2, 1, 6, 50),
-	(3, 3, 3, 3, 1, 7, 100),
-	(4, 4, 4, 4, 3, 2, 30);
+INSERT INTO habitaciones (idtipohabitacion, numcuarto, numhabitacion, piso, capacidad, precio) VALUES
+	(1,  1, 1, 1, 2, 30),
+	(2,  2, 2, 1, 6, 50),
+	(3,  3, 3, 1, 7, 100),
+	(4,  4, 4, 3, 2, 30);
 SELECT * FROM habitaciones;
 
 -- tabla reservaciones
@@ -150,6 +153,7 @@ CREATE TABLE reservaciones
 	fechasalida DATE NOT NULL,
 	tipocomprobante CHAR(8) NOT NULL,  -- factura , boleta  
 	fechacomprobante DATETIME NOT NULL DEFAULT NOW(),
+	estado CHAR(1) NOT NULL DEFAULT '1',
 	CONSTRAINT ck_tipocomprobante_reservaciones CHECK (tipocomprobante IN ('Factura', 'Boleta')),
 	CONSTRAINT fk_idusuario_reservaciones FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario),
 	CONSTRAINT fk_idhabitacion_reservaciones FOREIGN KEY (idhabitacion) REFERENCES habitaciones (idhabitacion),
@@ -170,6 +174,7 @@ CREATE TABLE detallespagos
 (
 	iddetallepago INT AUTO_INCREMENT PRIMARY KEY,
 	idreservacion INT NOT NULL,
+	diapago DATE NOT NULL DEFAULT NOW(),
 	formapago VARCHAR(20) NOT NULL,
 	CONSTRAINT fk_idreservacion_detallespagos FOREIGN KEY (idreservacion) REFERENCES reservaciones (idreservacion)
 )ENGINE = INNODB;
@@ -180,14 +185,4 @@ INSERT INTO detallespagos (idreservacion, formapago) VALUES
 	(3, 'Debito'),
 	(4, 'Efectivo');
 SELECT * FROM detallespagos;
-
--- pagos
-CREATE TABLE pagos
-(
-	idpagos INT AUTO_INCREMENT PRIMARY KEY,
-	iddetallepago INT NOT NULL,
-	-- estado VARCHAR(10),
-	total DECIMAL(10,2) NOT NULL,
-	-- constraint ck_estado_pagos check (estado in ('Pendiente', 'Pagado'))
-)ENGINE = INNODB
 

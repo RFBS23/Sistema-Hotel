@@ -26,7 +26,7 @@
             <img src="images/icono.png" style="width: 185px;" alt="logo">
             <h4 class="mt-1 mb-5 pb-1">Inicia Sesion</h4>
           </div>
-          <form>
+          <form method="" action="">
             <div class="form-floating mb-3">
               <input type="email" class="form-control rounded-3 " id="email" placeholder="name@example.com" autofocus autocomplete="off" style="background-color: #FCCBF6;">
               <label for="email">Correo Electronico</label>
