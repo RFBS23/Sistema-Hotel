@@ -1,0 +1,25 @@
+.cd{
+  color: rgb(0, 156, 47);
+}
+
+.carD{
+  border-radius: 1px;
+  border-color: rgb(0, 156, 47);
+  
+}
+
+.cardDispo{
+  background-color: #54BD1A;
+  color: white;
+
+}
+
+.cardOcup{
+  background-color:#E74C3C ;
+  color: white;
+}
+
+.cardLimp{
+  background-color:#CBC22A;
+  color: white;
+}

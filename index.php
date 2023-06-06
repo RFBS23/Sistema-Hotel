@@ -1,117 +1,153 @@
 <?php
-  session_start();
-  if (isset($_SESSION['iniciarSesion']) && $_SESSION['iniciarSesion']['login']) {
-    header('Location: views/dashboard.php');
-  }
+session_start();
+
+//Si el usuario ya tiene una sesión activa.. entonces NO DEBE ESTAR AQUI !!!
+if(isset($_SESSION['segurity']) && $_SESSION['segurity']['login']){
+    header('Location:view/dashboard.php');
+
+}
 ?>
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bienvenido</title>
-  <link rel="shortcut icon" href="images/icono.png" type="image/x-icon">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <title>bienvenido</title>
+  <link rel="stylesheet" href="./style/login.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
-<body style="background-color: #CBE6FC;">
-  <section class="vh-100">
-    <div class="container py-5 h-100">
-      <div class="row d-flex align-items-center justify-content-center h-100">
-        <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="images/hotel.svg" class="img-fluid" alt="logo">
-        </div>
-        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-          <div class="text-center">
-            <img src="images/icono.png" style="width: 185px;" alt="logo">
-            <h4 class="mt-1 mb-5 pb-1">Inicia Sesion</h4>
+
+<body>
+
+  <center>
+
+    <div>
+      <div>
+        <div class="col-sm-6 text-black">
+
+          <div class="d-flex align-items-center h-custom-3 px-5 ms-xl-4 mt-5 pt-5 pt-xl-12 mt-xl-n5">
+
+            <form style="width: 40rem;" autocomplete="off">
+
+              <h2 class="fw-normal mb-3 pb-3 fw-bold title text-primary">iniciar sesion</h2>
+
+              <div class="form-floating mb-4">
+                <input type="text" id="email" class="form-control form-control-sm" placeholder="Ingrese su usuario" />
+                <label class="form-label" for="email">Nombre Usuario</label>
+              </div>
+
+
+
+              <div class="form-floating mb-3">
+                <input type="password" id="password" class="form-control form-control-sm"
+                  placeholder="Ingrese su contraseña" />
+                <label class="form-label" for="password">Contraseña</label>
+              </div>
+
+              <div class="check-mostrar mb-4" style="text-align: left; font-size: 13px; color:#9A9A9A;">
+
+              </div>
+              <div class="pt-1 mb-4">
+                <button class="btn btn-outline-primary" type="button" id="iniciar-sesion">Iniciar sesion</button>
+              </div>
+            </form>
+
           </div>
-          <form method="" action="">
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3 " id="email" placeholder="name@example.com" autofocus autocomplete="off" style="background-color: #FCCBF6;">
-              <label for="email">Correo Electronico</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control rounded-3" id="password" placeholder="Password" style="background-color: #CBFCDB;">
-              <label for="password">contraseña</label>
-            </div>
-            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="button" id="iniciar-sesion">Ingresar</button>
-          </form>
+
         </div>
       </div>
-      <footer class="sticky-footer ">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Sistema Hotel by Fabrizio Barrios Saavedra - RFBS23</span>
-          </div>
-        </div>
-      </footer>
     </div>
-  </section>
+  </center>
 
-  <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <!-- CDN sweetAlert2 -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    $(document).ready(function (){
+  $(document).ready(function() {
 
-      let timerInterval
+    var ver = false;
 
-      function login(){
-        const datos = {
-          "operacion": "iniciarSesion",
-          "email"    : $("#email").val(),
-          "password" : $("#password").val()
-        };
-
-        $.ajax({
-          url: 'controllers/usuario.controllers.php',
-          type: 'GET',
-          data: datos,
-          dataType: 'JSON',
-          success: function (result){
-            if (result.login){
-              Swal.fire({
-                title: `Bienvenido: ${result.nombres} ${result.apellidos}`,
-                text: 'Se le dirigira automaticamente al dashboard',
-                timer: 2000,
-                timerProgressBar: true,
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading()
-                  const b = Swal.getHtmlContainer().querySelector('b')
-                  timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                  }, 100)
-                },
-                willClose: () => {
-                  clearInterval(timerInterval)
-                }
-              }).then((result) => {
-                window.location.href = `views/dashboard.php`;
-              })
-              //alert(`Bienvenido: ${result.apellidos} ${result.nombres}`);
-            }else{
-              Swal.fire({
-                text: result.mensaje,
-                timer: 2000,
-                timerProgressBar: true,
-              })
-              //alert(result.mensaje);
-            }
-          }
-        });
+    function verPassword() {
+      if (ver) {
+        document.getElementById("password").setAttribute("type", "password");
+        ver = false;
+      } else {
+        document.getElementById("password").setAttribute("type", "text");
+        ver = true;
       }
+    }
 
-      $("#iniciar-sesion").click(login);
-      
-      $("#password").keypress(function (evt) {
-        if (evt.keyCode == 13){
-          login();
+    function login() {
+      const datos = {
+        "operacion": "iniciarSesion",
+        "email": $("#email").val(),
+        "password": $("#password").val(),
+      };
+
+      $.ajax({
+        url: 'controller/usuario.controller.php',
+        type: 'GET',
+        data: datos,
+        dataType: 'JSON',
+        success: function(result) {
+          if (result.login) {
+            Swal.fire({
+              title: 'Ingreso Valido',
+              text: 'Bienvenido: ' + `${result.apellidos} ${result.nombres}`,
+              icon: 'success',
+              confirmButtonText: `OK`,
+              confirmButtonColor: '#03643a'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = `./view/dashboard.php`;
+              }
+            })
+          } else if (result.mensaje == "Contraseña") {
+            Swal.fire({
+              title: 'Contraseña incorrecta',
+              icon: 'error',
+              confirmButtonText: `OK`,
+              confirmButtonColor: '#03643a'
+            })
+          } else {
+            Swal.fire({
+              title: 'El usuario ingresado es incorrecto',
+              icon: 'error',
+              confirmButtonText: `OK`,
+              confirmButtonColor: '#03643a'
+            })
+          }
         }
       });
+    }
+
+    $("#iniciar-sesion").click(login);
+
+    $("#checkVer").click(verPassword);
+
+    $("#password").keypress(function(evt) {
+      if (evt.keyCode == 13) {
+        login();
+      }
     });
+
+
+  });
   </script>
+
+
+
+
+
+
+
+
+
 </body>
+
 </html>

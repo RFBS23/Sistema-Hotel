@@ -1,477 +1,261 @@
 USE hotel;
 
--- tabla usuarios
 DELIMITER $$
-CREATE PROCEDURE spu_usuarios_login(IN _email VARCHAR(70))
-BEGIN
-	SELECT	idusuario,
-		nombreusuario,
-		apellidos,
-		nombres,
-		telefono,
-		email,
-		claveacceso,
-		nivelacceso
+CREATE PROCEDURE spu_usuarios_iniciarS (IN _email VARCHAR(50))
+BEGIN 
+
+	SELECT usuarios.`idusuario`,
+		personas.`apellidos`, personas.`nombres`,		
+		usuarios.nombreusuario,	usuarios.email, usuarios.`claveacceso`
 	FROM usuarios
-	INNER JOIN personas ON personas.idpersona = usuarios.idpersona
-	WHERE email = _email AND estado = '1';
-END $$
-CALL spu_usuarios_login('mexzo@gmail.pe');
+	INNER JOIN personas ON personas.`idpersona` = usuarios.`idpersona`
+	WHERE email = _email AND estado = '1';  
 
--- recuperar usuarios
+END$$
+CALL spu_usuarios_iniciarS('fabrizio@hola.pe');
+
 DELIMITER $$
-CREATE PROCEDURE spu_usuarios_listar()
-BEGIN
-	SELECT idusuario, nombreusuario, nombres, apellidos, telefono, email, nivelacceso
-	FROM usuarios
-	INNER JOIN personas ON personas.idpersona = usuarios.idpersona;
+CREATE PROCEDURE spu_reservaciones_get()
+BEGIN 
+	SELECT 	RE.idreservacion,
+			CONCAT (CLI.nombres, ' ' , CLI.apellidos) AS cliente,
+			RE.fechaentrada, RE.fechasalida,
+			HA.numhabitacion, HA.piso, HA.capacidad, HA.precio
+
+	FROM reservaciones RE
+	INNER JOIN empleados EM ON EM.idempleado = RE.idempleado 
+	INNER JOIN personas CLI ON CLI.idpersona = RE.idcliente
+	INNER JOIN habitaciones HA ON HA.idhabitacion = RE.idhabitacion
+	WHERE RE.estado = '1'
+	ORDER BY RE.idreservacion;	
 END $$
-CALL spu_usuarios_listar();
+CALL spu_reservaciones_get();
 
-/*
-DELIMITER $$
-CREATE PROCEDURE spu_usuarios_registrar(
-	in _apellidos varchar(40),
-	in _nombreusuario varchar(30),
-	in _nombres varchar(40),
-	in _telefono char(9),
-	in _email varchar(70),
-	in _claveacceso varchar(90),
-	in _nivelacceso char(1)
-)
-BEGIN
-	if _telefono = '' then set _telefono = null;
-	end if;
-	insert into usuarios (apellidos, nombreusuario, nombres, telefono, email, claveacceso, nivelacceso) 
-	values (_apellidos, _nombreusuario, _nombres, _telefono, _email, _claveacceso, _nivelacceso)
-	INNER JOIN personas ON personas.idpersona = usuarios.idpersona;
-END $$
-call spu_usuarios_registrar('minotauro', 'cuto', '', 'cuto@developer.pe', 'holamundo', 'Administrador');
-CALL spu_usuarios_listar();
-*/
-
-
--- tabla reservaciones
--- reservaciones get
-DELIMITER $$
-CREATE PROCEDURE spu_reservaciones_listar()
-BEGIN
-	SELECT 	reservaciones.idreservacion,
-			CONCAT (clientes.nombres, ' ' , clientes.apellidos) AS cliente,
-			reservaciones.fechaentrada, reservaciones.fechasalida,
-			habitacion.numhabitacion, habitacion.piso, habitacion.capacidad, habitacion.precio
-
-	FROM reservaciones reservaciones
-	INNER JOIN empleados empleado ON empleado.idempleado = reservaciones.idempleado 
-	INNER JOIN personas clientes ON clientes.idpersona = reservaciones.idcliente
-	INNER JOIN habitaciones habitacion ON habitacion.idhabitacion = reservaciones.idhabitacion
-	WHERE reservaciones.estado = '1'
-	ORDER BY reservaciones.idreservacion;
-END $$
-CALL spu_reservaciones_listar();
-
--- actualizar reservaciones
-DELIMITER $$
-CREATE PROCEDURE spu_reservaciones_actualizar
-(
-	IN _idreservacion	INT,
-	IN _idusuario  	INT,
-	IN _idhabitacion INT,
-	IN _idcliente		INT,
-	IN _idempleado		INT,
-	IN _fechaentrada	DATE,
-	IN _fechasalida		DATE,
-	IN _tipocomprobante	CHAR(8)
-)
-BEGIN
-	UPDATE reservaciones SET 
-	idusuario = _idusuario,
-	idhabitacion = _idhabitacion,
-	idcliente = _idcliente,
-	idempleado = _idempleado,
-	fechaentrada = _fechaentrada,
-	fechasalida = _fechasalida,
-	tipocomprobante = _tipocomprobante
-	WHERE idreservacion = _idreservacion;
-END $$
-CALL spu_reservaciones_actualizar(2, 1, 1, 2, 2, CURRENT_TIMESTAMP(), '2023-04-20', 'Factura');
-CALL spu_reservaciones_listar();
-
--- eliminar reservaciones
 DELIMITER $$ 
 CREATE PROCEDURE spu_reservaciones_eliminar(IN _idreservacion INT)
 BEGIN
 	UPDATE reservaciones SET estado = '0'
 	WHERE idreservacion = _idreservacion;
 END $$
-CALL spu_reservaciones_eliminar(1);
-CALL spu_reservaciones_listar();
+CALL spu_reservaciones_eliminar(2);
 UPDATE reservaciones SET estado = '1';
 
--- recuperar reservaciones
+DELIMITER $$
+CREATE PROCEDURE spu_reservaciones_update
+(
+IN _idreservacion 	INT,
+IN _idusuario 		INT,
+IN _idhabitacion 	INT,
+IN _idcliente 		INT,
+IN _idempleado 		INT,
+IN _fechaentrada 	DATE,
+IN _fechasalida 	DATE,
+IN _tipocomprobante 	CHAR(1)
+)
+BEGIN
+	UPDATE reservaciones SET
+	 idusuario = _idusuario,
+	 idhabitacion = _idhabitacion,
+	 idcliente = _idcliente,
+	 idempleado = _idempleado,
+	 fechaentrada = _fechaentrada,
+	 fechasalida = _fechasalida,
+	 tipocomprobante = _tipocomprobante
+	 WHERE idreservacion = _idreservacion;
+
+END $$
+
+CALL spu_reservaciones_update(6,1,2,11,2, '2023-06-01','2023-06-08','B');
+
 DELIMITER $$ 
-CREATE PROCEDURE spu_reservaciones_getdata(IN _idreservacion INT )
+CREATE PROCEDURE spu_reservaciones_recuperar(IN _idreservacion INT )
 BEGIN 
-	SELECT  idreservacion, idcliente, idempleado, idusuario,
+	SELECT  idreservacion,idcliente, idempleado, idusuario,
 		idhabitacion, fechaentrada, fechasalida, 
 		tipocomprobante
 	FROM reservaciones
 	WHERE idreservacion = _idreservacion;
 END $$
-CALL spu_reservaciones_getdata(1);
 
--- tabla pagos
--- pagos get
+CALL spu_reservaciones_recuperar(1);
+
 DELIMITER $$ 
-CREATE PROCEDURE spu_detpagos_getdata()
+CREATE PROCEDURE spu_pagos_get()
 BEGIN 
-	SELECT 	CONCAT (clientes.nombres, ' ', clientes.apellidos) AS cliente,
-			pago.diapago, pago.formapago, habitacion.precio AS precioTotal, 
-			DATEDIFF(reservacion.fechasalida, reservacion.fechaentrada) * habitacion.precio AS montoTotal
-	FROM detallespagos pago
-	INNER JOIN reservaciones reservacion ON reservacion.idreservacion = pago.idreservacion
-	INNER JOIN personas clientes ON clientes.idpersona = reservacion.idcliente
-	INNER JOIN habitaciones habitacion ON habitacion.idhabitacion = reservacion.idhabitacion;
+	SELECT 	CONCAT (CLI.nombres, ' ', CLI.apellidos) AS cliente,
+			PA.fechapago, PA.mediopago, HA.precio AS precioDia, 
+			DATEDIFF(RE.fechasalida, RE.fechaentrada) 
+			* HA.precio AS montoPagar
+	FROM pagos PA
+	INNER JOIN reservaciones RE ON RE.idreservacion = PA.idreservacion
+	INNER JOIN personas CLI ON CLI.idpersona = RE.idcliente
+	INNER JOIN habitaciones HA ON HA.idhabitacion = RE.idhabitacion;
 END $$
-CALL spu_detpagos_getdata();
+CALL spu_pagos_get();
 
--- recuperar empleado
 DELIMITER $$
-CREATE PROCEDURE spu_empleados_listar()
-BEGIN
-	SELECT 	empleado.idempleado,
-		persona.nombres
-	FROM empleados empleado
-	INNER JOIN personas persona ON persona.idpersona = empleado.idpersona;
+CREATE PROCEDURE spu_recuperar_empleados()
+BEGIN 
+	SELECT 	EM.idempleado,
+		PER.nombres
+	FROM empleados EM
+	INNER JOIN personas PER ON PER.idpersona = EM.idpersona;
 END $$
-CALL spu_empleados_listar();
 
--- recuperar clientes
+CALL spu_recuperar_empleados();
+
 DELIMITER $$
-CREATE PROCEDURE spu_personas_listar()
+CREATE PROCEDURE spu_recuperar_clientes()
 BEGIN
 	SELECT idpersona,
-	CONCAT(nombres , ' ' , apellidos) AS clientes, dni, telefono, fechanacimiento
+	CONCAT(nombres , ' ' , apellidos) AS clientes
 	FROM personas;
 END $$
-CALL spu_personas_listar();
+CALL spu_recuperar_clientes();
 
--- RECUPERAR HABITACIONES 
 DELIMITER $$
-CREATE PROCEDURE spu_habitaciones_listar()
+CREATE PROCEDURE spu_recuperar_usuarios()
 BEGIN 
-	SELECT 	idhabitacion, 
-		CONCAT(descripcion, ' Nro° Habitacion ', numhabitacion) AS habitacion
-	FROM habitaciones
-	INNER JOIN categoria ON idcategoria = idcategoria;
+	SELECT idusuario, nombreusuario
+	FROM usuarios;
 END $$
-CALL spu_habitaciones_listar();
 
--- habitaciones data
+CALL spu_recuperar_usuarios();
+
 DELIMITER $$
-CREATE PROCEDURE spu_habitaciones_getdata()
-BEGIN
-	SELECT 	numhabitacion, descripcion, habitaciones.estado
-	FROM habitaciones
-	INNER JOIN categoria ON idcategoria = idcategoria;
+CREATE PROCEDURE spu_recuperar_habitaciones()
+BEGIN 
+	SELECT 	HA.idhabitacion, 
+		CONCAT(TH.tipo, '  N°', HA.numhabitacion) AS habitacion
+	FROM habitaciones HA
+	INNER JOIN tipohabitaciones TH ON TH.idtipohabitacion = HA.idtipohabitacion;
 END $$
-CALL spu_habitaciones_getdata();
 
--- spu_haDisponibles_mostrar
-DELIMITER $$ 
-CREATE PROCEDURE spu_habitaciones_disponible()
+CALL spu_recuperar_habitaciones();
+
+DELIMITER $$
+CREATE PROCEDURE spu_habitaciones_data()
 BEGIN
-	SELECT	COUNT(*) AS Disponible
+	SELECT 	HA.numhabitacion,
+		TH.tipo, HA.estado
+	FROM habitaciones HA
+	INNER JOIN tipohabitaciones TH ON TH.idtipohabitacion = HA.idtipohabitacion;
+END $$
+
+CALL spu_habitaciones_data();
+
+DELIMITER $$ 
+CREATE PROCEDURE spu_haDisponibles_mostrar()
+BEGIN
+		
+	SELECT	COUNT(*) AS habitaciones_disponibles
 	FROM habitaciones
 	WHERE estado = 'Disponible';
 END $$
-CALL spu_habitaciones_disponible();
 
--- spu_haOcupadas_mostrar()
+CALL spu_haDisponibles_mostrar();
+
 DELIMITER $$ 
-CREATE PROCEDURE spu_habitaciones_ocupadas()
+CREATE PROCEDURE spu_haOcupadas_mostrar()
 BEGIN
-	SELECT COUNT(*) AS Ocupadas
+	SELECT COUNT(*) AS habitaciones_ocupadas
 	FROM habitaciones
 	WHERE estado = 'Ocupado';
 END $$
-CALL spu_habitaciones_ocupadas();
 
--- spu_haLimpieza_mostrar
+CALL spu_haOcupadas_mostrar();
+
 DELIMITER $$ 
-CREATE PROCEDURE spu_habitaciones_limpieza()
+CREATE PROCEDURE spu_haLimpieza_mostrar()
 BEGIN
-	SELECT COUNT(*) AS Limpieza
+	SELECT COUNT(*) AS habitaciones_Limpieza
 	FROM habitaciones
 	WHERE estado = 'Limpieza';
 END $$
-CALL spu_habitaciones_limpieza();
 
--- reservaciones registrar
-/**/
+CALL spu_haLimpieza_mostrar();
+
+DELIMITER $$ 
+CREATE PROCEDURE spu_listar_usuarios()
+BEGIN
+	SELECT 	US.idusuario,
+			PE.nombres, PE.apellidos,
+			US.email, US.nombreusuario
+			
+	FROM usuarios US
+	INNER JOIN personas PE ON PE.idpersona = US.idpersona;
+END $$
+CALL spu_listar_usuarios();
+
 DELIMITER $$
 CREATE PROCEDURE spu_reservaciones_registrar
 (
-	IN _idusuario 		INT,
-	IN _idhabitacion  	INT,
-	IN _idcliente		INT,
-	IN _idempleado		INT,
-	IN _fechaentrada	DATE,
-	IN _fechasalida		DATE,
-	IN _tipocomprobante	CHAR(8)
+IN _idusuario 		INT,
+IN _idhabitacion  	INT,
+IN _idcliente		INT,
+IN _idempleado		INT,
+IN _fechaentrada	DATE,
+IN _fechasalida		DATE,
+IN _tipocomprobante	CHAR(1)
 )
 BEGIN
-INSERT INTO reservaciones (idusuario, idhabitacion, idcliente, idempleado, fechaentrada, fechasalida, tipocomprobante) VALUES
-	( _idusuario, _idhabitacion, _idcliente, _idempleado, _fechaentrada, _fechasalida, _tipocomprobante);
-	SELECT LAST_INSERT_ID() AS _id;
+	INSERT INTO reservaciones (idusuario, idhabitacion, idcliente, idempleado, fechaentrada, fechasalida, tipocomprobante) VALUES
+		( _idusuario, _idhabitacion, _idcliente, _idempleado, _fechaentrada, _fechasalida, _tipocomprobante);
+		SELECT LAST_INSERT_ID() AS ultimo_id;
 END $$
-CALL spu_reservaciones_registrar(1, 3, 1, 2, CURRENT_TIMESTAMP(), '2023-03-24', 'Factura');
 
--- spu_pagos_registrar
-DELIMITER $$
-CREATE PROCEDURE spu_detallespagos_registro
-(
-	IN _idhabitacion  	INT,
-	IN _idcliente		INT,
-	IN _idusuario 		INT,
-	IN _idempleado		INT,
-	IN _fechaentrada	DATE,
-	IN _fechasalida		DATE,
-	IN _tipocomprobante	CHAR(8),
-	IN _formapago 		VARCHAR(20)
-)
-BEGIN
-	DECLARE _id INT;
-	CALL spu_reservaciones_registrar( _idusuario, _idhabitacion, _idcliente, _idempleado, _fechaentrada, _fechasalida, _tipocomprobante);
-	SELECT LAST_INSERT_ID() INTO _id;
-	INSERT INTO detallespagos (idreservacion, formapago) VALUES (_id, _formapago);
-END $$
-CALL spu_detallespagos_registro(2, 2, 1, 1, CURRENT_TIMESTAMP(), '2023-09-12', 'Factura', 'Debito');
-SELECT * FROM detallespagos;
+CALL spu_reservaciones_registrar(1,1,2,1,'2023-06-01','2023-06-10','B');
 
-
--- GRAFICO muestra numero de ventas en la semana
 DELIMITER $$ 
-CREATE PROCEDURE spu_grafico_alquiler()
-BEGIN 
-	SELECT COUNT(*) AS cantidad, DATE(fecharegistro) AS dias
+CREATE PROCEDURE spu_pagos_registrar
+(
+IN _idusuario 		INT,
+IN _idhabitacion  	INT,
+IN _idcliente		INT,
+IN _idempleado		INT,
+IN _fechaentrada	DATE,
+IN _fechasalida		DATE,
+IN _tipocomprobante	CHAR(1),
+IN _mediopago		VARCHAR(20)
+)
+BEGIN
+	DECLARE ultimo_id INT;
+	CALL spu_reservaciones_registrar(_idusuario, _idhabitacion, _idcliente, _idempleado, _fechaentrada, _fechasalida, _tipocomprobante);
+	SELECT LAST_INSERT_ID() INTO ultimo_id;
+	INSERT INTO pagos (idreservacion, mediopago) VALUES (ultimo_id, _mediopago);
+	UPDATE habitaciones SET estado = 'Ocupado' WHERE idhabitacion = _idhabitacion;
+END $$
+CALL spu_pagos_registrar(1,1,3,1,'2023-06-01','2023-06-10','B','Debito');
+SELECT * FROM pagos;
+
+DELIMITER $$ 
+CREATE PROCEDURE spu_mostrarNventas_grafico()
+BEGIN
+	SELECT COUNT(*) AS cantReservaciones, DATE(fecharegistro) AS diasReservacion
 	FROM  reservaciones
 	WHERE fecharegistro BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW()
 	GROUP BY DATE(fecharegistro);
 END $$
-CALL spu_grafico_alquiler();
+CALL spu_mostrarNventas_grafico();
 
-
--- GRAFICO2 
--- Muestra el total de dinero del dia 
 DELIMITER $$
-CREATE PROCEDURE spu_grafico_monto()
+CREATE PROCEDURE spu_montoTotal_grafico()
 BEGIN
 	SELECT CASE
-		WHEN DAYOFWEEK(diapago) = 1 THEN 'Domingo'
-		WHEN DAYOFWEEK(diapago) = 2 THEN 'Lunes'
-		WHEN DAYOFWEEK(diapago) = 3 THEN 'Martes'
-		WHEN DAYOFWEEK(diapago) = 4 THEN 'Miercoles'
-		WHEN DAYOFWEEK(diapago) = 5 THEN 'Jueves'
-		WHEN DAYOFWEEK(diapago) = 6 THEN 'Viernes'
-		WHEN DAYOFWEEK(diapago) = 7 THEN 'Sabado'
+		WHEN DAYOFWEEK(PA.fechapago) = 1 THEN 'Domingo'
+		WHEN DAYOFWEEK(PA.fechapago) = 2 THEN 'Lunes'
+		WHEN DAYOFWEEK(PA.fechapago) = 3 THEN 'Martes'
+		WHEN DAYOFWEEK(PA.fechapago) = 4 THEN 'Miercoles'
+		WHEN DAYOFWEEK(PA.fechapago) = 5 THEN 'Jueves'
+		WHEN DAYOFWEEK(PA.fechapago) = 6 THEN 'Viernes'
+		WHEN DAYOFWEEK(PA.fechapago) = 7 THEN 'Sabado'
 		ELSE 'Error'
-		END AS dias,
-		SUM(precio) AS monto
-	FROM detallespagos
-	INNER JOIN reservaciones ON reservaciones.idreservacion = detallespagos.idreservacion
-	INNER JOIN habitaciones ON habitaciones.idhabitacion = reservaciones.idhabitacion
-	GROUP BY dias
-	-- FIELD para especificar el orden
-	ORDER BY FIELD(dias, 'Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
+		END AS dia_semana,
+		SUM(HA.precio) AS monto_venta
+	FROM pagos PA
+	INNER JOIN reservaciones RE ON RE.idreservacion = PA.idreservacion
+	INNER JOIN habitaciones HA ON HA.idhabitacion = RE.idhabitacion
+	GROUP BY dia_semana
+	ORDER BY FIELD(dia_semana, 'Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
 END $$
-CALL spu_grafico_monto();
-
-
-
-
-/*me quedo aqio*/
-/*
-DELIMITER $$
-CREATE PROCEDURE spu_detallespagos_registro
-(
-	IN _idhabitacion  	INT,
-	IN _idcliente		INT,
-	IN _idusuario 		INT,
-	IN _idempleado		INT,
-	IN _fechaentrada	DATE,
-	IN _fechasalida		DATE,
-	IN _tipocomprobante	CHAR(8),
-	IN _formapago 		VARCHAR(20)
-)
-BEGIN
-	DECLARE _id INT;
-	CALL spu_reservaciones_registrar( _idusuario, _idhabitacion, _idcliente, _idempleado, _fechaentrada, _fechasalida, _tipocomprobante);
-	SELECT LAST_INSERT_ID() INTO _id;
-	INSERT INTO detallespagos (idreservacion, formapago) VALUES (_id, _formapago);
-END $$
-CALL spu_detallespagos_registro(2, 2, 1, 1, CURRENT_TIMESTAMP(), '2023-09-12', 'Factura', 'Debito');
-SELECT * FROM detallespagos;
-
-DELIMITER $$
-CREATE PROCEDURE spu_detallespagos_listar()
-BEGIN 
-	SELECT 	CONCAT (clientes.nombres, ' ' , clientes.apellidos) AS cliente, pago.formapago, pago.diapago,habitacion.precio AS montoTotal
-	FROM detallespagos pago
-	INNER JOIN reservaciones reservacion ON reservacion.idreservacion = pago.idreservacion
-	INNER JOIN personas clientes ON clientes.idpersona = reservacion.idcliente
-	INNER JOIN habitaciones habitacion ON habitacion.idhabitacion = reservacion.idhabitacion;
-END $$
-CALL spu_detallespagos_listar();
-
--- tabla personas
-DELIMITER $$
-CREATE PROCEDURE spu_personas_listar()
-BEGIN
-	SELECT idpersona,
-	CONCAT(nombres , ' ' , apellidos) AS clientes, dni, telefono, fechanacimiento
-	FROM personas
-	WHERE estado = '1'
-	ORDER BY idpersona DESC;
-END $$
-CALL spu_personas_listar();
-
-DELIMITER $$
-CREATE PROCEDURE spu_personas_registrar
-(
-	IN _nombres VARCHAR(30),
-	IN _apellidos VARCHAR(30),
-	IN _dni CHAR(8),
-	IN _telefono CHAR(9),
-	IN _fechanacimiento DATE
-)
-BEGIN
-	IF _telefono = '' THEN SET _telefono = NULL; END IF;
-	IF _dni = '' THEN SET _dni = NULL; END IF;
-	INSERT INTO personas (nombres, apellidos, dni, telefono, fechanacimiento) VALUES
-		(_nombres, _apellidos, _dni, _telefono, _fechanacimiento);
-END $$
-CALL spu_personas_registrar('fiorela', 'pampañaupa', '55887744', '', '2002-12-03');
-CALL spu_personas_listar();
-
-DELIMITER $$
-CREATE PROCEDURE spu_personas_buscar_dni(IN _dni CHAR(8))
-BEGIN
-	SELECT idpersona, nombres, apellidos, dni, telefono, fechanacimiento
-	FROM personas
-	WHERE dni = _dni AND estado = '1';
-END $$
-CALL spu_personas_buscar_dni('55887744');
-
-DELIMITER $$
-CREATE PROCEDURE spu_personas_eliminar(IN _idpersona INT)
-BEGIN
-	UPDATE personas SET estado = '0'
-		WHERE idpersona = _idpersona;
-END $$
-CALL spu_personas_eliminar(1);
-CALL spu_personas_listar();
-
-
-DELIMITER $$
-CREATE PROCEDURE spu_personas_getdata(IN _idpersona INT)
-BEGIN
-	SELECT idpersona, nombres, apellidos, dni, telefono, fechanacimiento
-		FROM personas
-		WHERE idpersona = _idpersona;
-END $$
-CALL spu_personas_getdata(1);
-
-DELIMITER $$
-CREATE PROCEDURE spu_personas_actualizar
-(
-	IN _idpersona INT,
-	IN _nombres VARCHAR(30),
-	IN _apellidos VARCHAR(30),
-	IN _dni CHAR(8),
-	IN _telefono CHAR(9),
-	IN _fechanacimiento DATE
-)
-BEGIN
-	IF _telefono = '' THEN SET _telefono = NULL; END IF;
-	
-	UPDATE personas SET
-		nombres = _nombres,
-		apellidos = _apellidos,
-		dni = _dni,
-		telefono = _telefono,
-		fechanacimiento = _fechanacimiento
-	WHERE idpersona = _idpersona;
-END $$
-CALL spu_personas_actualizar(4, 'fiorela', 'pampañaupa', '55887744', '987653421', '2002-12-03');
-CALL spu_personas_listar();
-
--- tabla empleados
-
--- tabla habitaciones
-DELIMITER $$
-CREATE PROCEDURE spu_habitaciones_listar()
-BEGIN
-	SELECT 	habitacion.numhabitacion, categoria.descripcion,
-		habitacion.estado
-	FROM habitaciones habitacion
-	INNER JOIN categoria categoria ON categoria.idcategoria = categoria.idcategoria;
-END $$
-CALL spu_habitaciones_listar();
-
-DELIMITER $$
-CREATE PROCEDURE spu_habitaciones_mostrar()
-BEGIN 
-	SELECT 	habitacion.idhabitacion, categoria.descripcion
-	FROM habitaciones habitacion
-	INNER JOIN categoria categoria ON categoria.idcategoria = habitacion.idcategoria;
-	
-END $$
-CALL spu_habitaciones_mostrar();
-
-DELIMITER $$
-CREATE PROCEDURE spu_habitaciones_getdata()
-BEGIN 
-	SELECT 	idhabitacion, 
-		CONCAT(descripcion, '  N°', numhabitacion) AS habitacion
-	FROM habitaciones
-	INNER JOIN categoria ON idcategoria = idcategoria;
-END $$
-CALL spu_habitaciones_getdata();
-
-
--- tabla graficos
-DELIMITER $$ 
-CREATE PROCEDURE spu_grafico_finsemana()
-BEGIN 
-
-	SELECT COUNT(*) AS cantidad, DATE(fecharegistro) AS dias
-	FROM  reservaciones
-	WHERE fecharegistro BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW()
-	GROUP BY DATE(fecharegistro);
-END $$
-CALL spu_grafico_finsemana();
-
-DELIMITER $$
-CREATE PROCEDURE spu_grafico_total()
-BEGIN
-	SELECT CASE
-		WHEN DAYOFWEEK(pago.formapago) = 1 THEN 'Domingo'
-		WHEN DAYOFWEEK(pago.formapago) = 2 THEN 'Lunes'
-		WHEN DAYOFWEEK(pago.formapago) = 3 THEN 'Martes'
-		WHEN DAYOFWEEK(pago.formapago) = 4 THEN 'Miercoles'
-		WHEN DAYOFWEEK(pago.formapago) = 5 THEN 'Jueves'
-		WHEN DAYOFWEEK(pago.formapago) = 6 THEN 'Viernes'
-		WHEN DAYOFWEEK(pago.formapago) = 7 THEN 'Sabado'
-		ELSE 'Error'
-		END AS dias,
-		SUM(habitacion.precio) AS monto
-	FROM detallespagos pago
-	INNER JOIN reservaciones reservacion ON reservacion.idreservacion = pago.idreservacion
-	INNER JOIN habitaciones habitacion ON habitacion.idhabitacion = reservacion.idhabitacion
-	GROUP BY dias
-	-- FIELD para especificar el orden
-	ORDER BY FIELD(dias, 'Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
-END $$
-CALL spu_grafico_total();
-*/
+CALL spu_montoTotal_grafico();

@@ -1,0 +1,19 @@
+errores corregidos
+
+1.- crear tablas contrato
+2.- eliminar tabla categoria
+3.- cambiar nombre detallespago a pagos
+4.- cards habitaciones disponible ocupados limpieza funcional - si agrega una habitacion en estado ocupado el numero del card de ocupado aumentara
+
+NOTA (total de habitaciones no funciona todavia)
+
+5.- quitar el nuvel de acceso de usuario
+6.- agregue graficos
+7.- agregue select2 para buscar al cliente
+8.- saque el css y js de la carpeta assets
+9.- agregue grafico 1y 2 mostrarselect a la carpeta js
+10.- corregi los cdn de chart js
+11.- crear procedimiento almacenado de reservaciones de registro y procedimiento de grafico 1 y 2
+12.- esta todo funcional el problema es en reservaciones que al registrar debe refrescar la pagina manual mente
+13.- quite los diseños
+14.- el boton reportes no funciona todavia
