@@ -38,6 +38,29 @@ if(isset($_POST['operacion'])){
     }
 
 
+    if($_POST['operacion'] == 'habitacionRegistrar'){
+        $dataSave = [
+            "idtipohabitacion"  => $_POST['idtipohabitacion'],
+            "numcamas"          => $_POST['numcamas'],
+            "numhabitacion"     => $_POST['numhabitacion'],
+            "piso"              => $_POST['piso'],
+            "capacidad"         => $_POST['capacidad'],
+            "precio"            => $_POST['precio']
+
+        ];
+
+        $response = $habitacion->habitaciones_register($dataSave);
+        echo json_encode($response);
+    }
+
+    if($_POST['operacion'] == 'mostrarTipoH'){
+        $dataO = $habitacion->mostrarTipoH();
+        if($dataO){
+            echo json_encode($dataO);
+        }
+
+    }
+
 }
 
 ?>

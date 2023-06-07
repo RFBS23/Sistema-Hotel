@@ -106,7 +106,7 @@ insert  into `habitaciones`(`idhabitacion`,`idtipohabitacion`,`numcamas`,`numhab
 (3,3,3,120,2,'6',100.00,'Ocupado'),
 (4,3,3,3,1,'7',100.00,'Disponible'),
 (5,1,1,1,1,'2',30.00,'Ocupado'),
-(6,4,4,4,3,'2',30.00,'Disponible');
+(6,4,4,4,3,'2',30.00,'Ocupado');
 
 /*Table structure for table `pagos` */
 
@@ -120,7 +120,7 @@ CREATE TABLE `pagos` (
   PRIMARY KEY (`idpago`),
   KEY `fk_con_idr` (`idreservacion`),
   CONSTRAINT `fk_con_idr` FOREIGN KEY (`idreservacion`) REFERENCES `reservaciones` (`idreservacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `pagos` */
 
@@ -129,7 +129,9 @@ insert  into `pagos`(`idpago`,`idreservacion`,`fechapago`,`mediopago`) values
 (2,2,'0000-00-00 00:00:00',''),
 (3,3,'0000-00-00 00:00:00',''),
 (4,4,'0000-00-00 00:00:00',''),
-(5,11,'2023-06-06 15:52:25','Debito');
+(5,11,'2023-06-06 15:52:25','Debito'),
+(6,12,'2023-06-06 15:57:49','Efectivo'),
+(7,13,'2023-06-06 21:28:05','Efectivo');
 
 /*Table structure for table `personas` */
 
@@ -144,14 +146,16 @@ CREATE TABLE `personas` (
   `fechaNac` datetime NOT NULL,
   PRIMARY KEY (`idpersona`),
   UNIQUE KEY `uk_per_tel` (`dni`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `personas` */
 
 insert  into `personas`(`idpersona`,`nombres`,`apellidos`,`dni`,`telefono`,`fechaNac`) values 
 (1,'fabrizio','Barrios Saavedra','89632547','986574123','2004-03-19 00:00:00'),
 (2,'daniela','Mexzo Chavez','82533246','986574985','2003-07-27 00:00:00'),
-(3,'cristina','Barreto Rojas','12345678','91225885','2003-02-12 00:00:00');
+(3,'cristina','Barreto Rojas','12345678','91225885','2003-02-12 00:00:00'),
+(4,'angelo','chicharito','98653274','986521473','2012-10-14 00:00:00'),
+(5,'lucas','pelucas','98888888','966666666','2007-06-08 00:00:00');
 
 /*Table structure for table `reservaciones` */
 
@@ -179,17 +183,19 @@ CREATE TABLE `reservaciones` (
   CONSTRAINT `fk_res_idh` FOREIGN KEY (`idhabitacion`) REFERENCES `habitaciones` (`idhabitacion`),
   CONSTRAINT `fk_res_idu` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`),
   CONSTRAINT `ck_res_tco` CHECK (`tipocomprobante` in ('F','B'))
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `reservaciones` */
 
 insert  into `reservaciones`(`idreservacion`,`idusuario`,`idhabitacion`,`idcliente`,`idempleado`,`fecharegistro`,`fechaentrada`,`fechasalida`,`tipocomprobante`,`fechacomprobante`,`estado`) values 
-(1,1,1,1,1,'2023-06-06 15:43:21','2023-06-06','2023-01-04','F','2023-06-06 15:43:21','1'),
+(1,1,1,1,1,'2023-06-06 15:43:21','2023-06-06','2023-01-04','F','2023-06-06 15:43:21','0'),
 (2,2,2,2,2,'2023-06-06 15:43:21','2023-06-06','2023-04-12','B','2023-06-06 15:43:21','1'),
-(3,1,3,3,3,'2023-06-06 15:43:21','2023-06-06','2023-05-20','B','2023-06-06 15:43:21','1'),
+(3,1,6,3,3,'2023-06-06 15:43:21','2023-06-06','2023-05-27','B','2023-06-06 15:43:21','1'),
 (4,2,1,3,2,'2023-06-06 15:43:21','2023-06-06','2023-09-10','F','2023-06-06 15:43:21','1'),
 (9,1,1,2,1,'2023-06-06 15:51:33','2023-06-01','2023-06-10','B','2023-06-06 15:51:33','1'),
-(11,1,1,3,1,'2023-06-06 15:52:25','2023-06-01','2023-06-10','B','2023-06-06 15:52:25','1');
+(11,1,5,3,1,'2023-06-06 15:52:25','2023-06-01','2023-06-25','F','2023-06-06 15:52:25','0'),
+(12,2,6,1,1,'2023-06-06 15:57:49','2023-06-06','2023-06-30','B','2023-06-06 15:57:49','1'),
+(13,2,5,4,3,'2023-06-06 21:28:05','2023-06-07','2023-06-23','F','2023-06-06 21:28:05','1');
 
 /*Table structure for table `tipohabitaciones` */
 
@@ -234,6 +240,41 @@ insert  into `usuarios`(`idusuario`,`idpersona`,`email`,`nombreusuario`,`claveac
 (1,1,'fabrizio@hola.pe','fabriziobarrios','$2y$10$EohJSIFgIehaCjTte7gR7ejMGA.iYrZ20Tn9h1KLUdydZFY7e8tbK','2023-06-06 15:32:55','1'),
 (2,2,'mexzo@gmail.pe','danielachavez','$2y$10$Rl.KQvA3eLF0XSlNrPj8euYJUw8CqSscWIwyVzWYPl6zPpRaW5lxi','2023-06-06 15:32:55','1'),
 (3,3,'cristina@hotmail.pe','cristinabarreto','$2y$10$doonbpnR46ytzDoz28mD6eiutBTu/bQF2hsn9Ujs5Zhri0XgsXyFW','2023-06-06 15:32:55','1');
+
+/* Procedure structure for procedure `spu_cliente_listar` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_cliente_listar` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_cliente_listar`()
+BEGIN 
+	SELECT 	idpersona, nombres, apellidos,
+		dni, telefono, DATE(fechaNac) AS fechaNac
+	FROM personas;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_cliente_registrar` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_cliente_registrar` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_cliente_registrar`(
+IN _nombres 	VARCHAR(30),
+IN _apellidos 	VARCHAR(30),
+IN _dni 	CHAR(8),
+IN _telefono 	CHAR(9),
+IN _fechaNac	DATE
+)
+BEGIN 
+	IF _telefono = '' THEN SET _telefono = NULL;END IF;
+	IF _fechaNac = '' THEN SET _fechaNac = NULL;END IF;
+INSERT INTO personas (nombres, apellidos, dni , telefono, fechaNac) VALUES
+		(_nombres, _apellidos, _dni , _telefono, _fechaNac);
+END */$$
+DELIMITER ;
 
 /* Procedure structure for procedure `spu_habitaciones_data` */
 

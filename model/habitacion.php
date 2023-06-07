@@ -62,6 +62,47 @@ class Habitaciones extends Conexion{
         }
     }
 
+    public function habitaciones_register($datos = []){
+
+        $response = [
+            "status" => false,
+            "message" => ""
+        ];
+
+        try{
+            $query = $this->conexion->prepare("CALL spu_habitaciones_registrar(?,?,?,?,?,?)");
+            $response["status"] = $query->execute(
+                array(
+                    $datos["idtipohabitacion"],
+                    $datos["numcamas"],
+                    $datos["numhabitacion"],
+                    $datos["piso"],
+                    $datos["capacidad"],
+                    $datos["precio"]                    
+                    
+                )
+            );
+        }
+        catch(Exception $e){
+            $response["message"] = "No se completo el proceso. Codigo error: " . $e->getCode();
+
+        }
+        return $response; 
+    }
+
+
+    public function mostrarTipoH(){
+        try{
+            $query = $this->conexion->prepare("CALL spu_mostrar_tipoH()");
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+
+        }
+        catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
 
 }
 

@@ -2,7 +2,6 @@
 session_start();
 
 // Comprobamos si el usuario inicio sesión
-
 if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
     header('Location:../index.php');
 }
@@ -136,106 +135,79 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
           </div>
         </div>
       </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <form action="" autocomplete="off" id="form_clientes">
+              <div class="card mt-4">
+                <div class="card-header">
+                  Registro de clientes
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="nombres" class="form-label">Nombres</label>
+                    <input type="text" id="nombres" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" id="apellidos" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-3">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="text" id="dni" class="form-control form-control-sm" maxlength="8">
+                  </div>
+                  <div class="mb-3">
+                    <label for="telefono" class="form-label">Telefono</label>
+                    <input type="text" id="telefono" class="form-control form-control-sm" maxlength="9">
+                  </div>
+                  <div class="mb-3">
+                    <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" id="fechaNac" class="form-control form-control-sm">
+                  </div>
 
-      <hr>
-      <!-- Tabla -->
-      <div class=" tableR mt-5">
-        <table id="table_reservaciones"
-          class="table table-bordered border-secondary table-sm display responsive nowrap table-hover" width="100%">
-          <thead class="table-success">
-            <tr>
-              <th>Cliente</th>
-              <th>Fecha entrada</th>
-              <th>Fecha Salida</th>
-              <th>N° habitacion</th>
-              <th>Piso</th>
-              <th>Capacidad</th>
-              <th>Precio</th>
-              <th>Operaciones</th>
-            </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Modal Body -->
-      <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-      <div class="modal fade" id="modal-actualizar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-        role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered " role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalTitleId">Actualizar reservacion</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form action="" id="form-reservaciones" autocomplete="off">
-
-                <div class="mb-3">
-                  <label for="idcliente" class="form-label">Cliente</label>
-                  <select id="idcliente" class="form-select" disabled>
-                    <option value="">Selección</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="idempleado" class="form-label">Empleado</label>
-                  <select id="idempleado" class="form-select" disabled>
-                    <option value="">Selección</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="idusuario" class="form-label">Usuario</label>
-                  <select id="idusuario" class="form-select" disabled>
-                    <option value="">Selección</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="idhabitacion" class="form-label">Habitacion</label>
-                  <select id="idhabitacion" class="form-select">
-                    <option value="">Selección</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="fechaentrada" class="form-label">Fecha de entrada</label>
-                  <input type="date" id="fechaentrada" class="form-control form-control-sm">
-                </div>
-                <div class="mb-3">
-                  <label for="fechasalida" class="form-label">Fecha de salida</label>
-                  <input type="date" id="fechasalida" class="form-control form-control-sm">
-                </div>
-                <div class="mb-3">
-                  <label for="tipocomprobante" class="form-label">Tipo de comprobante (FACTURA - BOLETA)</label>
-                  <select id="tipocomprobante" class="form-select">
-                    <option value="">Selección</option>
-                    <option value="F">Factura</option>
-                    <option value="B">Boleta</option>
-                  </select>
+                  <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary" id="btnRegistrar" type="button">Registrar Clientes</button>
+                  </div>
                 </div>
 
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-success" id="btnActualizar">Actualizar</button>
-            </div>
+              </div>
+
+            </form>
+          </div>
+          <!-- Tabla -->
+          <div class="col-md-8 tableR ">
+            <table id="table_clientes" class="table table-bordered border-secondary table-sm display responsive nowrap"
+              width="100%">
+              <colgroup>
+                <col width="20%"> <!-- clientes -->
+                <col width="20%"> <!-- fecha entrada -->
+                <col width="20%"> <!-- fecha salida -->
+                <col width="20%"> <!-- N habitacion -->
+                <col width="20%"> <!-- N piso -->
+                <col width="20%"> <!-- capacidad -->
+                <col width="20%"> <!-- precio -->
+                <col width="20%"> <!-- Comandos -->
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>DNI</th>
+                  <th>Telefono</th>
+                  <th>Fecha de Nacimiento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- DATOS ASINCRONOS -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
-
-      <footer class="py-4  mt-auto">
-        <div class="container-fluid px-4">
-          <div class="d-flex align-items-center justify-content-between small">
-            <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Sistema Hotel by Fabrizio Barrios Saavedra - RFBS23</span>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
   </script>
   <script src="../js/scripts.js"></script>
@@ -249,12 +221,8 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
   <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-  <!-- select2 -->
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <!-- CDN sweetAlert2 -->
+  <!-- SweetAlert2 CDN -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- CDN para crear graficos -->
-  <script src="../js/mostrarSelect.js"></script>
 
   <script>
   $(document).ready(function() {
@@ -264,26 +232,23 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
     const cuerpoOcup = cardOcup.querySelector("div");
     const cardLimp = document.querySelector("#H_limp");
     const cuerpoLimp = cardLimp.querySelector("div");
-    //Activa el select2 en clientes
-    $("#cliente").select2();
 
-    let idreservacion = 0;
 
-    function get_reservaciones() {
+    function clientesListar() {
       $.ajax({
-        url: '../controller/reservacion.controller.php',
+        url: '../controller/cliente.controller.php',
         type: 'POST',
         data: {
-          'operacion': 'reservacionesGet'
+          'operacion': 'clientesListar'
         },
         success: function(result) {
 
-          var tablaDT = $("#table_reservaciones").DataTable();
+          var tablaDT = $("#table_clientes").DataTable();
           tablaDT.destroy();
 
-          $("#table_reservaciones tbody").html(result);
+          $("#table_clientes tbody").html(result);
 
-          $("#table_reservaciones").DataTable({
+          $("#table_clientes").DataTable({
             dom: 'Bfrtip',
             responsive: true,
             language: {
@@ -294,131 +259,43 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
       });
     }
 
-    function reservacionEliminar(id) {
-      Swal.fire({
-        title: "¿Está seguro de eliminar la reservación?",
-        text: "Esta acción no se puede deshacer",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar",
+    function clientesRegistrar() {
 
-      }).then(function(result) {
-        if (result.isConfirmed) {
-          $.ajax({
-            url: '../controller/reservacion.controller.php',
-            type: 'POST',
-            data: {
-              'operacion': 'reservacionEliminar',
-              'idreservacion': id
-            },
-            success: function() {
-              get_reservaciones();
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Eliminando reservacion',
-                showConfirmButton: false,
-                timer: 1500
-              })
-            }
-          });
-
-        }
-      });
-
-
-    }
-
-
-    function reservacionesUpdate() {
-
-      let enviar = {
-        'operacion': 'reservacionUpdate',
-        'idreservacion': idreservacion,
-        'idcliente': $("#idcliente").val(),
-        'idempleado': $("#idempleado").val(),
-        'idusuario': $("#idusuario").val(),
-        'idhabitacion': $("#idhabitacion").val(),
-        'fechaentrada': $("#fechaentrada").val(),
-        'fechasalida': $("#fechasalida").val(),
-        'tipocomprobante': $("#tipocomprobante").val(),
-
-      }
+      let dataR = {
+        'operacion': 'clientesRegistrar',
+        'nombres': $("#nombres").val(),
+        'apellidos': $("#apellidos").val(),
+        'dni': $("#dni").val(),
+        'telefono': $("#telefono").val(),
+        'fechaNac': $("#fechaNac").val(),
+      };
 
       Swal.fire({
-        title: "¿Está seguro de realizar esta acción?",
-        text: "Esta acción no se puede deshacer",
-        icon: "warning",
+        title: "¿Desea registrar un nuevo cliente?",
+        icon: "question",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#28B463",
+        cancelButtonColor: "#5DADE2",
         confirmButtonText: "Confirmar",
         cancelButtonText: "Cancelar",
 
       }).then(function(result) {
         if (result.isConfirmed) {
           $.ajax({
-            url: '../controller/reservacion.controller.php',
+            url: '../controller/cliente.controller.php',
             type: 'POST',
-            data: enviar,
+            data: dataR,
             success: function(result) {
-              get_reservaciones();
+              clientesListar();
+              $("#form_clientes")[0].reset();
 
-              $("#modal-actualizar").modal('hide');
+
             }
           });
         }
       })
 
-
-
-
     }
-
-    function recuperarReser(id) {
-      $("#form-reservaciones")[0].reset();
-
-      $.ajax({
-        url: '../controller/reservacion.controller.php',
-        type: 'POST',
-        data: {
-          'operacion': 'recuperarDatos',
-          'idreservacion': id
-        },
-        dataType: 'JSON',
-        success: function(result) {
-          $("#idcliente").val(result.idcliente);
-          $("#idempleado").val(result.idempleado);
-          $("#idusuario").val(result.idusuario);
-          $("#idhabitacion").val(result.idhabitacion);
-          $("#fechaentrada").val(result.fechaentrada);
-          $("#fechasalida").val(result.fechasalida);
-          $("#tipocomprobante").val(result.tipocomprobante);
-        }
-      });
-
-      $("#modal-actualizar").modal('show');
-
-    }
-
-
-    //Eventos
-    $("#table_reservaciones tbody").on("click", ".eliminar", function() {
-      idreservacion = $(this).data("ideliminar");
-      reservacionEliminar(idreservacion);
-
-    });
-
-    $("#table_reservaciones tbody").on("click", ".editar", function() {
-      idreservacion = $(this).data("ideditar");
-      recuperarReser(idreservacion);
-    })
-
-    $("#btnActualizar").click(reservacionesUpdate);
-
 
     function getDisponibles() {
       const data = new URLSearchParams();
@@ -523,9 +400,11 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
     getOcupadas();
     getMantenimiento();
 
-    get_reservaciones();
-    mostrarCliente();
-    mostrarEmpleados();
+
+    $("#btnRegistrar").click(clientesRegistrar);
+
+    clientesListar();
+
 
   });
   </script>

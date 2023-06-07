@@ -82,6 +82,10 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
               Graficos
             </a>
 
+            <a class="nav-link text-dark" href="./clientes.php">
+              <div class="sb-nav-link-icon"><i class="bi bi-people-fill"></i></div>
+              clientes
+            </a>
           </div>
         </div>
 

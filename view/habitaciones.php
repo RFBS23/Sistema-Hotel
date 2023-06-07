@@ -87,6 +87,10 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
               <div class="sb-nav-link-icon"><i class="bi bi-graph-up text-dark"></i></div>
               Graficos
             </a>
+            <a class="nav-link text-dark" href="./clientes.php">
+              <div class="sb-nav-link-icon"><i class="bi bi-people-fill"></i></div>
+              clientes
+            </a>
 
           </div>
         </div>
@@ -134,12 +138,63 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
           </div>
         </div>
         <hr>
-        <div class="mt-1" id="cardH">
+
+        <button type="button" class="btn btn-outline-primary" id="btnRegistrarH" data-bs-toggle="modal"
+          data-bs-target="#modal-registro">Registrar</button>
+
+        <div class="mt-3" id="cardH">
           <div class="row">
             <!-- DATOS ASINCRONOS -->
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+  <!--modale del registro -->
+  <div class="modal fade" id="modal-registro" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">Registrar habitacion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" autocomplete="off" id="form_habitacion">
+            <div class="mb-3">
+              <label for="tipoHabitacion" class="form-label">Tipo de habitacion</label>
+              <select id="tipoHabitacion" class="form-select">
+                <option value="">Selección</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="numcamas" class="form-label">Numero de camas</label>
+              <input type="number" id="numcamas" class="form-control form-control-sm">
+            </div>
+            <div class="mb-3">
+              <label for="numhabitacion" class="form-label">Numero de habitacion</label>
+              <input type="number" id="numhabitacion" class="form-control form-control-sm">
+            </div>
+            <div class="mb-3">
+              <label for="piso" class="form-label">Piso</label>
+              <input type="number" id="piso" class="form-control form-control-sm">
+            </div>
+            <div class="mb-3">
+              <label for="capacidad" class="form-label">Capacidad</label>
+              <input type="number" id="capacidad" class="form-control form-control-sm">
+            </div>
+            <div class="mb-3">
+              <label for="precio" class="form-label">Precio</label>
+              <input type="number" id="precio" class="form-control form-control-sm">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn " style="background-color: #27AE60 ;" id="btnR">Guardar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -169,6 +224,9 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
     const cardLimp = document.querySelector("#H_limp");
     const cuerpoLimp = cardLimp.querySelector("div");
 
+    const lsTipoH = document.querySelector("#tipoHabitacion");
+    const btnRegistrar = document.querySelector("#btnR")
+
     function getHabitaciones() {
       const data = new URLSearchParams();
       data.append("operacion", "habitacionGet");
@@ -183,24 +241,24 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
           datos.forEach(element => {
             let row = `
                   <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h5 text-xs font-weight-bold text-dark text-uppercase mb-1">
-                                                        Nro° Habitacion: ${element.numhabitacion}
-                                                    </div>
-                                                    <div class="h6 mb-0 font-weight-bold text-dark">
-                                                        Categoria: ${element.tipo}
-                                                    </div>
-                                                    <div class="h6 mb-0 font-weight-bold text-success py-2">
-                                                        Estado: ${element.estado}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                        Nro° Habitacion: ${element.numhabitacion}
+                                    </div>
+                                    <div class="h6 mb-0 font-weight-bold text-dark">
+                                        Categoria: ${element.tipo}
+                                    </div>
+                                    <div class="h6 mb-0 font-weight-bold text-success py-2">
+                                        Estado: ${element.estado}
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                                                                                                                     
                     `;
             cuerpoCard.innerHTML += row;
@@ -223,16 +281,16 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
           datos.forEach(element => {
             let row = `
                         <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">HABITACIONES (DISPONIBLES)</div>
-                                                    <div class="h4 mb-0 font-weight-bold text-success">${element.habitaciones_disponibles}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-boxes  fa-2x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>                  
+                          <div class="row no-gutters align-items-center">
+                              <div class="col mr-2">
+                                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">HABITACIONES (DISPONIBLES)</div>
+                                  <div class="h4 mb-0 font-weight-bold text-success">${element.habitaciones_disponibles}</div>
+                              </div>
+                              <div class="col-auto">
+                                  <i class="fas fa-boxes  fa-2x text-success"></i>
+                              </div>
+                          </div>
+                      </div>                  
                         `;
             cuerpoDispo.innerHTML += row;
           });
@@ -252,20 +310,20 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
           cuerpoOcup.innerHTML = ``
           datos.forEach(element => {
             let row = ` <div class="card-body">
-                                      <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                          <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">HABITACIONES OCUPADAS</div>
-                                          <div class="row no-gutters align-items-center">
-                                            <div class="col-auto">
-                                              <div class="h4 mb-0 mr-3 font-weight-bold text-danger">${element.habitaciones_ocupadas}</div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div class="col-auto">
-                                          <i class="fas fa-bed fa-2x text-danger"></i>
-                                        </div>
-                                      </div>
-                                    </div>                                                 
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">HABITACIONES OCUPADAS</div>
+                              <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                  <div class="h4 mb-0 mr-3 font-weight-bold text-danger">${element.habitaciones_ocupadas}</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-bed fa-2x text-danger"></i>
+                            </div>
+                          </div>
+                        </div>                                                 
                         `;
             cuerpoOcup.innerHTML += row;
           });
@@ -286,34 +344,105 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false ){
           datos.forEach(element => {
             let row = `
                         <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        HABITACIONES EN LIMPIEZA
-                                                    </div>
-                                                    <div class="h4 mb-0 font-weight-bold text-warning">
-                                                    ${element.habitaciones_Limpieza}
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-spray-can-sparkles fa-2x text-warning"></i>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        HABITACIONES EN LIMPIEZA
+                                    </div>
+                                    <div class="h4 mb-0 font-weight-bold text-warning">
+                                    ${element.habitaciones_Limpieza}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-spray-can-sparkles fa-2x text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
                         `;
             cuerpoLimp.innerHTML += row;
           });
         });
     }
 
+    function mostrarTipoH() {
+      const parameters = new URLSearchParams();
+      parameters.append("operacion", "mostrarTipoH");
+
+      fetch("../controller/habitacion.controller.php", {
+          method: 'POST',
+          body: parameters
+        })
+        .then(response => response.json())
+        .then(data => {
+          lsTipoH.innerHTML = "<option value=''>Seleccione</option>";
+          data.forEach(element => {
+            const optionTag = document.createElement("option");
+            optionTag.value = element.idtipohabitacion
+            optionTag.text = element.tipo;
+            lsTipoH.appendChild(optionTag);
+          });
+        });
+
+    }
+
+    function registrarHabitacion() {
+      Swal.fire({
+        title: "¿Está seguro de registrar?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: '#03643a',
+        customClass: {
+          confirmButton: "spacing",
+          cancelButton: "spacing"
+        }
 
 
+      }).then((result) => {
+        if (result.isConfirmed) {
 
+          const parameters = new URLSearchParams();
+          parameters.append("operacion", "habitacionRegistrar");
+          parameters.append("idtipohabitacion", document.querySelector("#tipoHabitacion").value);
+          parameters.append("numcamas", document.querySelector("#numcamas").value);
+          parameters.append("numhabitacion", document.querySelector("#numhabitacion").value);
+          parameters.append("piso", document.querySelector("#piso").value);
+          parameters.append("capacidad", document.querySelector("#capacidad").value);
+          parameters.append("precio", document.querySelector("#precio").value);
+
+          fetch("../controller/habitacion.controller.php", {
+              method: 'POST',
+              body: parameters
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              if (data.status) {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Nueva habitacion registrada',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                document.querySelector("#form_habitacion").reset();
+                $("#modal-registro").modal('hide');
+              } else {
+                Swal.fire("Error", data.message, "error");
+              }
+            });
+
+        }
+      });
+    }
 
     getHabitaciones();
     getDisponibles();
     getOcupadas();
     getMantenimiento();
+    mostrarTipoH();
+    btnRegistrar.addEventListener("click", registrarHabitacion);
 
   });
   </script>

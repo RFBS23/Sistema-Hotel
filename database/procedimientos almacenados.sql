@@ -15,6 +15,33 @@ END$$
 CALL spu_usuarios_iniciarS('fabrizio@hola.pe');
 
 DELIMITER $$
+CREATE PROCEDURE spu_cliente_registrar
+(
+IN _nombres 	VARCHAR(30),
+IN _apellidos 	VARCHAR(30),
+IN _dni 	CHAR(8),
+IN _telefono 	CHAR(9),
+IN _fechaNac	DATE
+)
+BEGIN 
+	IF _telefono = '' THEN SET _telefono = NULL;END IF;
+	IF _fechaNac = '' THEN SET _fechaNac = NULL;END IF;
+INSERT INTO personas (nombres, apellidos, dni , telefono, fechaNac) VALUES
+		(_nombres, _apellidos, _dni , _telefono, _fechaNac);
+END $$
+CALL spu_cliente_registrar('angelo','chicharito','98653274','986521473','2012-10-14');
+
+DELIMITER $$
+CREATE PROCEDURE spu_cliente_listar()
+BEGIN 
+	SELECT 	idpersona, nombres, apellidos,
+		dni, telefono, DATE(fechaNac) AS fechaNac
+	FROM personas;
+END $$
+CALL spu_cliente_listar();
+
+
+DELIMITER $$
 CREATE PROCEDURE spu_reservaciones_get()
 BEGIN 
 	SELECT 	RE.idreservacion,

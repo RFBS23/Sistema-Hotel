@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", () =>{
             labels: [],
             datasets: [
                 {
-                    backgroundColor: ['#18BC51','#4F62D1','#FF4343','#E232EA', '#EA7832'],
-                    label: 'Monto total de ventas a la semana',
+                    backgroundColor: ['#18BC51','#4F62D1','#FF4343','',''],
+                    label: 'Monto de venta por dia',
                     data: []
                 }
             ]
         }
+       
+      
     })
 
     function renderGrafico(datos = []){
